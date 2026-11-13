@@ -1,9 +1,9 @@
 ---
-name: modern-web-ui
+name: minimal-modern-ui
 description: Build or restyle minimal, clean, modern websites for people and small launches - personal sites, portfolios, landing pages and blogs - in plain HTML/CSS/JS that works with any stack. Covers choosing a quiet direction, design tokens and shared components so every page matches, page recipes (landing, personal, blog index, blog post), reading typography, restrained motion, accessible forms and disclosures, the accessibility and performance baseline, shipping (SEO, social preview, RSS, analytics, hosting) and verifying in a real browser. Use when asked for a "modern", "clean", "minimal", "polished" personal site, landing page or blog. Not for web apps, product UIs, dashboards or internal tools.
 ---
 
-# Modern web UI: minimal sites that feel finished
+# Minimal modern UI: minimal sites that feel finished
 
 For **personal sites, portfolios, landing pages and blogs**: small, content-first sites where restraint and
 detail do the work. Not for web apps, product interfaces, dashboards or tools; their problems (app state,
