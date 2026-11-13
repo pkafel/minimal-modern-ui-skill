@@ -1,22 +1,21 @@
 # Snippets
 
-Copy-paste building blocks for the patterns in SKILL.md. All vanilla CSS/JS, no dependencies. Treat the
-numbers and colors as starting points: swap tokens, sizes and timings to fit the project's direction.
-Colors come from the tokens, so the snippets work on light and dark pages alike. In a framework, see
-SKILL.md §10.
+Copy-paste building blocks for the patterns in SKILL.md. Plain HTML/CSS/JS, no dependencies, no build step
+required. Treat numbers and colors as starting points. Every snippet reads colors and sizes from the tokens,
+so they work in light and dark and in any direction family.
 
-## Shared file structure (any site with more than one page, or likely to get one)
+## Shared file structure
 
 ```
 styles/
   main.css          the only stylesheet pages link; declares the layer order
-  tokens.css        :root custom properties only (colors, type, space, radii, shadows, motion)
-  base.css          reset, body, headings, links, focus, [hidden]
+  tokens.css        :root custom properties only
+  base.css          reset, body, headings, links, focus, forms (see "Base layer")
   layout.css        .frame .section .split .stack
-  components.css    .btn .card .field .tip .site-header .site-footer … with --variants
+  components.css    .btn .card .field .prose .post-list .site-header .site-footer … with --variants
   pages/*.css       optional, arrangement only; no colors or sizes of their own
-scripts/site.js     reveals, tooltips, disclosures, driven by data attributes
-partials/           header, footer, head (via the framework, SSG or build step)
+scripts/site.js     page-load fade, reveals, disclosures; driven by data attributes
+partials/           header, footer, head: through the project's includes or templates, if any
 ```
 
 ```css
@@ -27,112 +26,300 @@ partials/           header, footer, head (via the framework, SSG or build step)
 @import url("layout.css") layer(layout);
 @import url("components.css") layer(components);
 ```
-Bundle them in a build step if there is one: chained `@import`s load one after another.
+If there is a build step, bundle them: chained `@import`s load one after another.
 
-Tokens beyond color, so components never hard-code sizes:
-```css
-:root {
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 40px; --space-7: 64px;
-  --radius-s: 8px; --radius-m: 14px; --radius-l: 22px; --radius-pill: 999px;
-  --text-s: 14px; --text-m: 16px; --text-l: 20px; --text-xl: clamp(28px, 3.4vw, 40px); --text-hero: clamp(36px, 5.4vw, 60px);
-  --dur-fast: .2s; --dur: .5s; --dur-reveal: 1s;
-}
-.stack > * + * { margin-top: var(--stack-gap, var(--space-4)); }   /* layout primitive: vertical rhythm */
-```
-Component with a variant, current-page nav marker:
-```css
-.card { padding: var(--space-5); border-radius: var(--radius-l); background: var(--surface); border: 1px solid var(--line); }
-.card--flat { background: transparent; }
-.site-nav a[aria-current="page"] { color: var(--text); }
-.site-nav a[aria-current="page"]::after { transform: scaleX(1); }
-```
-
-## Tokens (glass-gradient family; swap values per family)
-
-```css
-:root {
-  color-scheme: dark;
-  --bg-1: #16206a; --bg-2: #1f3c8f; --bg-glow: #2f5fae;
-  --text: #eef2ff; --muted: #b9c6ec; --dim: #8796c8;
-    --line: rgba(160,185,255,.22); --surface: rgba(40,60,140,.45);
-  --field-bg: rgba(15,25,80,.35); --tip-bg: #141d5c; --shadow: rgba(5,10,50,.5); --glow: rgba(150,180,255,.6);
-  --accent-a: #c9f6e4; --accent-b: #b8c6ff; --on-accent: #1b2560;
-  --ease-out: cubic-bezier(.2,.8,.2,1);
-  --font: "Inter", system-ui, sans-serif;
-}
-body {
-  margin: 0; color: var(--text); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased;
-  background: radial-gradient(1200px 700px at 50% 110%, var(--bg-glow), transparent 70%),
-              linear-gradient(180deg, var(--bg-1), var(--bg-2)) fixed;
-  background-color: var(--bg-1);
-}
-h1 { font-size: clamp(36px, 5.4vw, 60px); font-weight: 500; letter-spacing: -0.035em; line-height: 1.05; }
-```
-
-Fonts: `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>`
-then `https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap`.
-
-## Tokens: light and dark (neutral family)
-
-Same token names, so every snippet works unchanged. Body text clears 4.5:1 on `--bg-1` and `--surface` in
-both schemes. Drop the `[data-theme]` rules if there is no toggle.
+## Tokens (default: quiet light + dark)
 
 ```css
 :root {
   color-scheme: light dark;
+  /* color */
   --bg-1: #fafaf9; --bg-2: #fafaf9; --bg-glow: transparent; --surface: #ffffff;
   --text: #18181b; --muted: #52525b; --dim: #71717a; --line: rgba(0,0,0,.1);
   --accent-a: #4f46e5; --accent-b: #4f46e5; --on-accent: #ffffff;
-  --field-bg: #ffffff; --tip-bg: #ffffff; --shadow: rgba(0,0,0,.12); --glow: rgba(79,70,229,.25);
-  --ease-out: cubic-bezier(.2,.8,.2,1); --font: "Inter", system-ui, sans-serif;
+  --field-bg: #ffffff; --tip-bg: #ffffff; --code-bg: #f4f4f5;
+  --shadow: rgba(0,0,0,.08); --glow: rgba(79,70,229,.25);
+  /* elevation: two layers, ambient + direct */
+  --elev-1: 0 1px 2px var(--shadow), 0 4px 12px var(--shadow);
+  --elev-2: 0 1px 2px var(--shadow), 0 12px 32px var(--shadow);
+  /* type */
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --display: var(--font);
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --text-s: 14px; --text-m: 16px; --text-read: clamp(17px, 1rem + .2vw, 19px); --text-l: 20px;
+  --text-xl: clamp(28px, 3.4vw, 40px); --text-hero: clamp(36px, 5.4vw, 60px);
+  --measure: 68ch;
+  /* space, shape, motion */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 40px; --space-7: 64px;
+  --radius-s: 6px; --radius-m: 10px; --radius-l: 16px; --radius-pill: 999px;
+  --ease-out: cubic-bezier(.2,.8,.2,1); --dur-fast: .2s; --dur: .5s; --dur-reveal: 1s;
+  --header-h: 0px;   /* set to the sticky header's height if there is one */
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg-1: #0c0c0f; --bg-2: #0c0c0f; --surface: #17171c;
     --text: #f4f4f5; --muted: #a1a1aa; --dim: #8b8b94; --line: rgba(255,255,255,.12);
     --accent-a: #818cf8; --accent-b: #818cf8; --on-accent: #0c0c0f;
-    --field-bg: #17171c; --tip-bg: #27272a; --shadow: rgba(0,0,0,.5); --glow: rgba(129,140,248,.3);
+    --field-bg: #17171c; --tip-bg: #27272a; --code-bg: #17171c;
+    --shadow: rgba(0,0,0,.4); --glow: rgba(129,140,248,.3);
   }
 }
 :root[data-theme="dark"] { color-scheme: dark; /* same values as the dark block above */ }
 :root[data-theme="light"] { color-scheme: light; }
 ```
+Body text clears 4.5:1 on `--bg-1` and `--surface` in both schemes. Drop the `[data-theme]` rules if there is
+no toggle. Match `<meta name="theme-color">` to `--bg-1` (two tags with `media` for light and dark).
 
-## Page-load sequence
+Web fonts, if any: `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect"
+href="https://fonts.gstatic.com" crossorigin>`, load only the weights used with `&display=swap`, and preload the
+one file used for body text.
+
+## Base layer
+
+```css
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 16px); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body {
+  margin: 0; min-height: 100vh; background: var(--bg-1); color: var(--text);
+  font: var(--text-m)/1.6 var(--font); -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; }
+h1 { font-size: var(--text-hero); font-weight: 500; letter-spacing: -0.035em; }
+p, li { text-wrap: pretty; }
+img, svg, video { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent-a); outline-offset: 3px; }
+[hidden] { display: none !important; }
+button, input, select, textarea { font: inherit; color: inherit; }
+input, select, textarea { font-size: max(16px, 1em); }               /* below 16px iOS zooms on focus */
+select { background-color: var(--field-bg); color: var(--text); }   /* Windows dark-mode contrast */
+a, button, label, summary { touch-action: manipulation; }            /* no double-tap zoom delay */
+time, .num { font-variant-numeric: tabular-nums; }
+```
+
+## Skip link and landmarks
+
+```html
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">…</header>
+  <main id="main" tabindex="-1">…</main>
+  <footer class="site-footer">…</footer>
+</body>
+```
+```css
+.skip { position: absolute; left: 16px; top: -100px; z-index: 100; padding: 10px 16px; border-radius: var(--radius-m);
+  background: var(--text); color: var(--bg-1); text-decoration: none; }
+.skip:focus { top: 16px; }
+main:focus { outline: none; }
+```
+
+## Layout skeleton
+
+```css
+.frame {
+  max-width: 1120px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column;
+  padding: var(--space-5) max(var(--space-5), env(safe-area-inset-right)) 0 max(var(--space-5), env(safe-area-inset-left));
+}
+.frame > .site-footer { margin-top: auto; }          /* footer at the bottom, also on short pages */
+.section { padding-block: var(--space-7); }
+.section + .section { border-top: 1px solid var(--line); }
+.split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
+.stack > * + * { margin-top: var(--stack-gap, var(--space-4)); }
+@media (max-width: 860px) {
+  .frame { padding-inline: max(var(--space-4), env(safe-area-inset-left)) max(var(--space-4), env(safe-area-inset-right)); }
+  .section { padding-block: var(--space-6); }
+  .split { grid-template-columns: 1fr; gap: 28px; }
+}
+```
+`env(safe-area-inset-*)` needs `<meta name="viewport" content="width=device-width, initial-scale=1,
+viewport-fit=cover">`. Never add `maximum-scale` or `user-scalable=no`. Use padding, not a top margin, on the
+frame: a margin collapses through `<body>` and adds scroll with `min-height: 100vh`.
+
+## Header with nav
+
+```html
+<header class="site-header">
+  <a class="brand" href="/" translate="no">Name</a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="/writing/" aria-current="page">Writing</a><a href="/projects/">Projects</a><a href="/about/">About</a>
+  </nav>
+</header>
+```
+```css
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); padding-block: var(--space-4); }
+.brand { font-weight: 600; text-decoration: none; }
+.site-nav { display: flex; gap: var(--space-5); }
+.site-nav a { position: relative; color: var(--muted); text-decoration: none; padding: 10px 0; transition: color var(--dur-fast); }
+.site-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 4px; height: 2px; border-radius: 2px;
+  background: var(--accent-a); transform: scaleX(0); transform-origin: left; transition: transform .3s ease; }
+.site-nav a:is(:hover, :focus-visible, [aria-current="page"]) { color: var(--text); }
+.site-nav a:is(:hover, :focus-visible, [aria-current="page"])::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) { .site-nav a::after { transition: none; } }
+```
+For a sticky header, add `position: sticky; top: 0; background: var(--bg-1);` and set `--header-h` to its height.
+
+## Prose (blog posts, long text)
+
+```css
+.prose { max-width: var(--measure); margin-inline: auto; font-size: var(--text-read); line-height: 1.7; }
+.prose :is(p, ul, ol, blockquote, pre, figure) { margin: 0 0 1.1em; }
+.prose :is(h2, h3) { margin: 2em 0 .6em; line-height: 1.25; letter-spacing: -0.01em; }
+.prose h2 { font-size: 1.45em; } .prose h3 { font-size: 1.2em; }
+.prose a { text-decoration: underline 1px; text-decoration-color: color-mix(in srgb, var(--accent-a) 55%, transparent);
+  text-underline-offset: .2em; transition: text-decoration-color var(--dur-fast); }
+.prose a:hover { text-decoration-color: var(--accent-a); }
+
+/* heading anchors: <h2 id="why">Why it matters <a class="anchor" href="#why" aria-label="Link to this section">#</a></h2> */
+.prose .anchor { margin-left: .3em; color: var(--dim); text-decoration: none; opacity: 0; transition: opacity var(--dur-fast); }
+.prose :is(h2, h3):hover .anchor, .prose .anchor:focus-visible { opacity: 1; }
+
+.prose blockquote { margin-inline: 0; padding-left: 1em; border-left: 2px solid var(--line); color: var(--muted); }
+.prose hr { border: 0; height: 1px; background: var(--line); margin: 2.5em 0; }
+.prose :not(pre) > code { font: .9em var(--mono); padding: .1em .35em; border-radius: var(--radius-s); background: var(--code-bg); }
+.prose pre { overflow-x: auto; padding: 1em 1.2em; border-radius: var(--radius-m); border: 1px solid var(--line);
+  background: var(--code-bg); font: .875em/1.6 var(--mono); tab-size: 2; }
+.prose figure img, .prose figure video { border-radius: var(--radius-m); }
+.prose figcaption { margin-top: .6em; font-size: var(--text-s); color: var(--muted); text-align: center; }
+/* figure wider than the text column, centered on it */
+.prose figure.wide { --w: max(100%, min(960px, 100vw - 48px)); width: var(--w); margin-left: calc((100% - var(--w)) / 2); }
+.prose .footnotes { margin-top: 3em; font-size: .9em; color: var(--muted); }
+```
+Post header: `<h1>`, then `<p class="meta"><time datetime="2026-11-02">2 Nov 2026</time> · 6 min read</p>` in
+`--muted`. Format dates once, at build time or by hand, in the site's language; `<time datetime>` keeps them
+machine-readable.
+
+## Post list (blog index, "writing" section)
+
+```html
+<h2 class="year">2026</h2>
+<ul class="post-list">
+  <li><a href="/posts/quiet-interfaces/">
+    <span class="post-title">Quiet interfaces</span>
+    <time datetime="2026-11-02">Nov 2</time>
+  </a></li>
+</ul>
+```
+```css
+.post-list { list-style: none; margin: 0; padding: 0; }
+.post-list li + li { border-top: 1px solid var(--line); }
+.post-list a { display: grid; grid-template-columns: 1fr auto; gap: var(--space-4); align-items: baseline;
+  padding: 14px 0; text-decoration: none; }                /* the whole row is the link */
+.post-list time { color: var(--dim); font-size: var(--text-s); white-space: nowrap; }
+.post-list a:hover .post-title { text-decoration: underline 1px; text-underline-offset: .2em; }
+.year { font-size: var(--text-l); margin: var(--space-6) 0 var(--space-2); }
+@media (max-width: 480px) { .post-list a { grid-template-columns: 1fr; gap: 2px; } }
+```
+Add a one-line summary as a third element spanning both columns if the index needs it.
+
+## Buttons and fields
+
+```css
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 24px;
+  font-weight: 600; color: var(--on-accent); border: 0; border-radius: var(--radius-m); cursor: pointer;
+  background: linear-gradient(120deg, var(--accent-a), var(--accent-b));
+  transition: transform .25s, box-shadow .25s, background-color .25s, color .25s;
+}
+.btn:hover { transform: scale(1.03); box-shadow: 0 8px 24px -8px var(--glow); }
+.btn:active { transform: scale(.98); }
+.btn--outline { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1px var(--line); }
+.btn--outline:hover { box-shadow: inset 0 0 0 1px var(--text); }
+.btn--pill { border-radius: var(--radius-pill); }
+.btn .arrow { transition: transform .25s; } .btn:hover .arrow { transform: translateX(3px); }
+
+.field { display: grid; gap: 6px; }
+.field label { font-weight: 500; }
+.field .hint { font-size: var(--text-s); color: var(--muted); }
+.field .error { font-size: var(--text-s); color: var(--text); }   /* pair with an icon or "Error:" prefix, not color alone */
+input, textarea {
+  min-height: 48px; padding: 0 14px; border-radius: var(--radius-m); background: var(--field-bg);
+  border: 1px solid var(--line); outline: none; transition: border-color .2s, box-shadow .2s;
+}
+textarea { padding-block: 12px; }
+input:focus-visible, textarea:focus-visible { border-color: var(--accent-a);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-a) 22%, transparent); }
+input[aria-invalid="true"] { border-color: currentColor; }
+```
+
+## Signup form with submit state
+
+```html
+<form class="signup" action="…" method="post">
+  <div class="field">
+    <label for="email">Email</label>
+    <div class="signup-row">
+      <input id="email" name="email" type="email" autocomplete="email" spellcheck="false"
+             placeholder="you@example.com" required aria-describedby="email-msg">
+      <button class="btn" type="submit"><span class="spinner" aria-hidden="true"></span><span>Get the newsletter</span></button>
+    </div>
+    <p class="msg" id="email-msg" aria-live="polite"></p>
+  </div>
+</form>
+```
+```css
+.signup-row { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.signup-row input { flex: 1 1 220px; }
+.spinner { display: none; width: 16px; height: 16px; border-radius: 50%; animation: spin .7s linear infinite;
+  border: 2px solid color-mix(in srgb, currentColor 25%, transparent); border-top-color: currentColor; }
+.btn.is-loading .spinner { display: block; }
+.btn:disabled { cursor: wait; }
+.msg { margin: 0; font-size: var(--text-s); }
+.msg:empty { min-height: 0; }           /* no reserved empty row (it makes the next line float), but keep it
+                                           rendered: display:none can stop screen readers announcing it */
+@keyframes spin { to { transform: rotate(360deg); } }
+```
+```js
+// Keeps the label, shows the spinner only if the request is slow, and keeps it long enough not to flicker.
+async function withLoading(btn, task, showAfter = 200, minVisible = 400) {
+  btn.disabled = true; btn.setAttribute("aria-busy", "true");
+  let shownAt = 0;
+  const timer = setTimeout(() => { btn.classList.add("is-loading"); shownAt = performance.now(); }, showAfter);
+  try { return await task(); }
+  finally {
+    clearTimeout(timer);
+    if (shownAt) await new Promise((r) => setTimeout(r, Math.max(0, minVisible - (performance.now() - shownAt))));
+    btn.classList.remove("is-loading"); btn.disabled = false; btn.removeAttribute("aria-busy");
+  }
+}
+```
+On submit: let native validation run (no `novalidate` unless you replace it fully), then `withLoading` around
+the request. On error, set `aria-invalid="true"`, write a fix-it message in `.msg` and focus the field. On
+success, replace the form with a short confirmation and the next step.
+
+## Page-load fade
 
 ```html
 <html class="no-js"> … <body class="is-loading">
 ```
 ```css
 .site-main { transition: opacity 1s, transform 1s; }
-body.is-loading .site-main { opacity: 0; transform: translateY(0.375rem); }
-body.is-loading { pointer-events: none; }
+.js body.is-loading .site-main { opacity: 0; transform: translateY(0.375rem); }   /* .js: visible without JS */
+@media (prefers-reduced-motion: reduce) { .site-main { transition: none; } }
 ```
 ```js
+// inline in <head>, so it runs before first paint:
 document.documentElement.classList.replace("no-js", "js");
+// in the site script:
 addEventListener("load", () => requestAnimationFrame(() => document.body.classList.remove("is-loading")));
 ```
 
-## Scroll-reveal engine (modeled on Carrd's reveal presets)
+## Scroll reveals (optional; modeled on Carrd's reveal presets)
 
 Markup: `data-reveal="fade-up|fade-down|fade-left|fade-right|fade-in|zoom-in|zoom-out|zoom-out-image|pop-in|blur-in"`,
 optional `data-i` (intensity 0–5 → distance 6px + 4.2px × i), `data-delay` (ms), `data-speed` (ms,
 default 1000), `data-stagger` (ms, applies to children).
 
 ```html
-<p class="eyebrow" data-reveal="fade-down" data-i="1">Product name</p>
 <h1 data-reveal="fade-up" data-i="0">Heading</h1>
-<p data-reveal="fade-up" data-i="1">Paragraph</p>
+<p data-reveal="fade-up" data-i="1">Lead</p>
 <div class="actions" data-reveal="fade-up" data-i="2" data-delay="250">Buttons</div>
 <ul data-reveal="fade-in" data-stagger="125"><li>…</li><li>…</li></ul>
-<div class="frame-img"><img data-reveal="zoom-out-image" src="…" alt="…" width="…" height="…"></div>
+<div class="photo"><img data-reveal="zoom-out-image" src="…" alt="…" width="…" height="…"></div>
 ```
 
-Put `data-reveal` on a wrapper (like `.actions` above), not on a button or link that has its own hover
-transition: the reveal's duration and delay would also slow the hover.
-
-For a card whose **surface** should appear after its content (a 500ms delay works well),
-put the reveal on a `::before` background layer: see "Card background fade" below.
+Put `data-reveal` on a wrapper (like `.actions`), not on a button or link with its own hover transition: the
+reveal's duration and delay would also slow the hover. Don't reveal paragraphs of an article.
 
 ```css
 /* Hidden state only when JS is running, so content never stays invisible. */
@@ -166,7 +353,7 @@ put the reveal on a `::before` background layer: see "Card background fade" belo
     "blur-in":        () => "none",
   };
   const prep = (el, effect, d, speed, delay) => {
-        el.style.setProperty("--reveal-from", (initial[effect] || initial["fade-up"])(d));
+    el.style.setProperty("--reveal-from", (initial[effect] || initial["fade-up"])(d));
     if (effect === "blur-in") el.style.setProperty("--reveal-filter", "blur(8px)");
     el.style.transitionDuration = `${speed}ms`;
     el.style.transitionDelay = `${delay}ms`;
@@ -189,348 +376,71 @@ put the reveal on a `::before` background layer: see "Card background fade" belo
 })();
 ```
 
-Re-playing a reveal for content injected later (e.g. results): remove `is-visible`, force reflow
-(`el.offsetWidth`), add it back inside `requestAnimationFrame`.
-
-## Card background fade (content first, surface after)
-
-```css
-.card { position: relative; isolation: isolate; }   /* keeps the z-index:-1 layer inside the card */
-.card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--surface); z-index: -1; }
-.js .card::before { opacity: 0; transition: opacity 1s ease .5s; }
-.js .card.is-visible::before { opacity: 1; }
-```
-Give the card `data-reveal="fade-in"` (so it gets `is-visible`) and reveal its children separately.
-
-**Not for glass cards.** On an element with `backdrop-filter`, don't animate the blur, a custom
-property its colors depend on, or its children's opacity: Chrome flickers. Use a glass "stage"
-instead: the card fades as one piece and its children only move.
-
-```css
-.js .stage { opacity: 0; transition: opacity 1s ease; }
-.js .stage.is-visible { opacity: 1; }
-.js .stage > * { transform: translateY(var(--rise, 14px)); transition: transform 1s ease; }
-.js .stage > :nth-child(1) { --rise: 6px; }
-.js .stage > :nth-child(2) { --rise: 10px; }
-.js .stage.is-visible > * { transform: none; }
-```
-
-## Hover & focus micro-interactions
-
-```css
-.btn {
-  display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 30px;
-  font: inherit; font-weight: 600; color: var(--on-accent); border: 0; border-radius: 14px; cursor: pointer;
-  background: linear-gradient(120deg, var(--accent-a), var(--accent-b));
-  box-shadow: 0 10px 30px -8px var(--glow);
-  transition: transform .25s, box-shadow .25s, background-color .25s, color .25s;
-}
-.btn:hover { transform: scale(1.0425); box-shadow: 0 16px 36px -8px var(--glow); }  /* 1.0425: most common template value */
-.btn.lift:hover { transform: translateY(-11%); }                                                  /* alternative: lift */
-.btn-outline { background: transparent; color: var(--text); border: 2px solid currentColor; }    /* secondary / editorial */
-.btn-pill { border-radius: 999px; }
-.btn:active { transform: scale(.98); }
-.btn .arrow { transition: transform .25s; } .btn:hover .arrow { transform: translateX(3px); }
-.btn:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent-a); outline-offset: 4px; }
-.icon-btn:hover { transform: scale(1.08); color: var(--accent-a); }
-
-/* Nav / text links: underline slides in from the left */
-nav a { position: relative; color: var(--muted); text-decoration: none; padding: 6px 0; transition: color .2s; }
-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 2px;
-  background: var(--accent-a); transform: scaleX(0); transform-origin: left; transition: transform .3s ease; }
-nav a:hover, nav a:focus-visible { color: var(--text); }
-nav a:hover::after, nav a:focus-visible::after { transform: scaleX(1); }
-@media (prefers-reduced-motion: reduce) { nav a::after { transition: none; } }
-
-input {
-  height: 48px; padding: 0 14px; border-radius: 12px; font: inherit; color: var(--text);
-  background: var(--field-bg); border: 1px solid var(--line); outline: none;
-  transition: border-color .2s, box-shadow .2s, background .2s;
-}
-input:focus-visible { border-color: var(--accent-a); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-a) 22%, transparent); }
-
-/* Static disclosure (no animation). For an animated one use "Animated show/hide box" below. */
-summary { list-style: none; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; }
-summary::-webkit-details-marker { display: none; }
-summary::before { content: ""; width: 7px; height: 7px; border-right: 2px solid; border-bottom: 2px solid; transform: rotate(-45deg); transition: transform .2s; }
-details[open] summary::before { transform: rotate(45deg); }
-```
-
-## Glass card + ambient blobs (glass family)
-
-```css
-.glass {
-  position: relative; overflow: hidden; border-radius: 22px; border: 1px solid rgba(255,255,255,.22);
-  background: linear-gradient(135deg, rgba(110,150,235,.55), rgba(80,140,200,.45) 50%, rgba(90,170,150,.55));
-  box-shadow: 0 30px 80px -20px rgba(5,10,50,.65), inset 0 1px 0 rgba(255,255,255,.25);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-}
-.glass::before, .glass::after {
-  content: ""; position: absolute; border-radius: 50%; filter: blur(50px); opacity: .55; pointer-events: none;
-  animation: drift 18s ease-in-out infinite alternate;
-}
-.glass::before { width: 420px; height: 420px; left: -120px; bottom: -200px; background: #5d6ef0; }
-.glass::after  { width: 380px; height: 380px; right: -120px; top: -160px; background: #5fc0a4; animation-delay: -9s; }
-.glass > * { position: relative; z-index: 1; }
-@keyframes drift { to { transform: translate(60px, -40px) scale(1.15); } }
-@media (prefers-reduced-motion: reduce) { .glass::before, .glass::after { animation: none; } }
-```
-
-## Low-poly mesh background (generated, no image)
+## Disclosure (FAQ, "show more")
 
 ```html
-<svg id="mesh" aria-hidden="true" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0"></svg>
-```
-```js
-(() => {
-  const svg = document.getElementById("mesh"), W = 1600, H = 1000, cols = 14, rows = 9, cw = W / cols, ch = H / rows;
-  let s = 7; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
-  const pts = [];
-  for (let r = 0; r <= rows; r++) for (let c = 0; c <= cols; c++) {
-    const edge = !r || !c || r === rows || c === cols;
-    pts.push([c * cw + (edge ? 0 : (rnd() - .5) * cw * .8), r * ch + (edge ? 0 : (rnd() - .5) * ch * .8)]);
-  }
-  const P = (r, c) => pts[r * (cols + 1) + c].map((n) => n.toFixed(1)).join(",");
-  let d = "";
-  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++)
-    d += (r + c) % 2
-      ? `M${P(r,c)}L${P(r,c+1)}L${P(r+1,c+1)}ZM${P(r,c)}L${P(r+1,c)}L${P(r+1,c+1)}Z`
-      : `M${P(r,c)}L${P(r,c+1)}L${P(r+1,c)}ZM${P(r,c+1)}L${P(r+1,c+1)}L${P(r+1,c)}Z`;
-  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-  svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
-  svg.innerHTML = `<path d="${d}" fill="none" stroke="rgba(170,195,255,.09)"/>`;
-})();
-```
-
-## Other background patterns (pure CSS, ≤10% contrast)
-
-```css
-/* Diagonal lines (for dark backgrounds) */
-.bg-diagonal { background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0 1px, transparent 1px 48px); }
-/* Thin grid (for light backgrounds) */
-.bg-grid { background-image: linear-gradient(rgba(0,0,0,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.05) 1px, transparent 1px); background-size: 160px 160px; }
-/* Bubbles: a few outlined circles (on a colored gradient) */
-.bg-bubbles { background-image: radial-gradient(circle at 20% 30%, transparent 10px, rgba(255,255,255,.25) 11px, transparent 12px),
-                                radial-gradient(circle at 70% 60%, transparent 16px, rgba(255,255,255,.2) 17px, transparent 18px); background-size: 220px 180px; }
-```
-
-## Gradient headline text (dark-minimal family, hero only)
-
-```css
-.gradient-text { background: linear-gradient(104deg, var(--accent-a), var(--accent-b)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-```
-
-## Framed photo overlapping a color block
-
-```css
-.photo-frame { border: 5px solid #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 50px -20px rgba(0,0,0,.35); }
-.photo-frame img { display: block; width: 100%; height: auto; }
-```
-
-## Loading button
-
-```html
-<button class="btn" id="go"><span class="spinner" aria-hidden="true"></span><span class="label">Submit</span></button>
-```
-```css
-.spinner { display: none; width: 16px; height: 16px; border-radius: 50%; border: 2px solid color-mix(in srgb, currentColor 25%, transparent); border-top-color: currentColor; animation: spin .7s linear infinite; }
-.btn:disabled { opacity: .7; cursor: wait; transform: none; }
-.btn:disabled .spinner { display: block; }
-@keyframes spin { to { transform: rotate(360deg); } }
-```
-```js
-btn.disabled = true; btn.querySelector(".label").textContent = "Submitting";
-// … finally { btn.disabled = false; label back to "Submit" }
-```
-
-## Count-up numbers + bar fill
-
-```js
-function countUp(el, value, format, dur = 1100) {
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return (el.textContent = format(value));
-  const t0 = performance.now();
-  const step = (t) => {
-    const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);   // ease-out cubic
-    el.textContent = format(value * e);
-    if (k < 1) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
-}
-```
-```css
-.track { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; }
-.fill  { height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--accent-a), var(--accent-b)); transition: width 1.1s var(--ease-out); }
-```
-Set `fill.style.width` inside a double `requestAnimationFrame` after inserting the markup so the transition runs.
-
-## Results reveal + scroll into view
-
-```css
-#results { scroll-margin-top: 24px; }
-```
-```js
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-results.hidden = false;
-results.classList.remove("is-visible"); void results.offsetWidth;
-requestAnimationFrame(() => results.classList.add("is-visible"));
-results.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
-```
-
-## Responsive skeleton (adjust widths to the page type)
-
-```css
-/* Tool pages with side-by-side panels: wide container, modest side padding. Reading pages: ~720–900px. */
-.frame { max-width: 1360px; margin: 0 auto; padding-top: 24px; min-height: 100vh; display: flex; flex-direction: column; }
-.frame > footer { margin-top: auto; }                  /* footer at the very bottom, also on short pages */
-.section { padding: 64px 24px; }
-.split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
-@media (max-width: 860px) {
-  .frame { margin: 0 16px; padding-top: 8px; }
-  .section { padding: 40px 16px; }
-  .split { grid-template-columns: 1fr; gap: 28px; }
-}
-```
-Use `padding-top` on the frame, not a top margin: a margin collapses through `<body>` and, combined with
-`min-height: 100vh`, adds a pointless 24px of scroll. Don't leave a bottom margin under the footer.
-
-## Equal-height cards (input next to results)
-
-```css
-.cards { display: grid; grid-template-columns: minmax(360px, 4fr) minmax(0, 7fr); gap: 24px; align-items: start; }
-@media (min-width: 961px) {
-  .cards { align-items: stretch; }
-  .cards > .input-card { display: flex; flex-direction: column; }
-  .cards > .input-card form { margin-top: auto; }      /* heading at the top, form pinned to the bottom */
-}
-@media (max-width: 960px) { .cards { grid-template-columns: 1fr; } }
-```
-Put anything that expands (tables, long details) in its own block *after* the cards, not inside the results card.
-That removes the need for script-based height syncing.
-
-## Animated show/hide box (full-width, under the cards)
-
-```html
-<button type="button" class="more" id="moreBtn" aria-expanded="false" aria-controls="moreBox">
-  <span id="moreLabel">Show details</span>
-</button>
-<!-- later, as a grid item that spans all columns -->
-<div class="reveal-box" id="moreBox" role="region" aria-label="Details">
-  <div class="reveal-inner"><div class="card">…content…</div></div>
+<div class="faq">
+  <h3><button type="button" class="disclosure" aria-expanded="false" aria-controls="q1">Is it free?</button></h3>
+  <div class="reveal-box" id="q1"><div class="reveal-inner"><p>Yes. …</p></div></div>
 </div>
 ```
 ```css
-.cards { --gap: 24px; }
-.reveal-box {
-  grid-column: 1 / -1; display: grid; grid-template-rows: 0fr;
-  margin-top: calc(var(--gap) * -1);                  /* cancels the grid gap while closed */
-  opacity: 0; transform: translateY(-12px); visibility: hidden;
-  transition: grid-template-rows .55s var(--ease-out), margin-top .55s var(--ease-out),
-              opacity .4s ease, transform .55s var(--ease-out), visibility 0s linear .55s;   /* hide after the animation */
-}
-.reveal-box.open { grid-template-rows: 1fr; margin-top: 0; opacity: 1; transform: none; visibility: visible; transition-delay: 0s; }
-.reveal-inner { min-height: 0; overflow: hidden; }
-.reveal-box.settled .reveal-inner { overflow: visible; }  /* lets the card's shadow show once it has opened */
-.reveal-box .card { backdrop-filter: none; }               /* it fades, so no backdrop-filter (flicker) */
-.more::before { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+.disclosure { display: flex; width: 100%; justify-content: space-between; align-items: center; gap: var(--space-4);
+  min-height: 48px; padding: 0; border: 0; background: none; font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
+.disclosure::after { content: ""; flex: none; width: 7px; height: 7px; border-right: 2px solid; border-bottom: 2px solid;
   transform: translateY(-2px) rotate(45deg); transition: transform .35s ease; }
-.more[aria-expanded="true"]::before { transform: translateY(1px) rotate(-135deg); }
-@media (prefers-reduced-motion: reduce) { .reveal-box, .more::before { transition: none; } }
+.disclosure[aria-expanded="true"]::after { transform: translateY(1px) rotate(-135deg); }
+.reveal-box { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .45s var(--ease-out), opacity .35s ease,
+  transform .45s var(--ease-out), visibility 0s linear .45s; }
+.js .reveal-box:not(.open) { grid-template-rows: 0fr; opacity: 0; transform: translateY(-8px); visibility: hidden; }
+.reveal-box.open { transition-delay: 0s; }
+.reveal-inner { min-height: 0; overflow: hidden; }
+.faq + .faq { border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { .reveal-box, .disclosure::after { transition: none; } }
 ```
 ```js
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const btn = document.getElementById("moreBtn"), box = document.getElementById("moreBox");
-let settle = 0;
-btn.addEventListener("click", () => {
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("button[aria-expanded][aria-controls]");
+  const box = btn && document.getElementById(btn.getAttribute("aria-controls"));
+  if (!box || !box.classList.contains("reveal-box")) return;
   const open = btn.getAttribute("aria-expanded") !== "true";
   btn.setAttribute("aria-expanded", open);
-  document.getElementById("moreLabel").textContent = open ? "Hide details" : "Show details";
-  clearTimeout(settle); box.classList.remove("settled"); box.classList.toggle("open", open);
-  if (open) settle = setTimeout(() => {
-    box.classList.add("settled");
-    box.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "nearest" });
-  }, reduce ? 0 : 600);
+  box.classList.toggle("open", open);
 });
 ```
+Closed only when JS runs, so the answers stay readable without it. For a "Show more" button outside a
+heading, also switch its text ("Show more" / "Show less").
 
-## Instant tooltips
+## Tooltip (only when inline help won't do)
 
-HTML elements (CSS only; works on hover and keyboard focus):
 ```css
 .has-tip { position: relative; }
-.tip { position: absolute; z-index: 5; left: 0; top: calc(100% + 8px); width: max-content; max-width: min(280px, 100%);
-  padding: 9px 12px; border-radius: 10px; background: var(--tip-bg); color: var(--text); border: 1px solid var(--line);
-  box-shadow: 0 10px 28px var(--shadow); font-size: 13px; line-height: 1.45;
+.tip { position: absolute; z-index: 5; left: 0; top: calc(100% + 8px); width: max-content; max-width: 280px;
+  padding: 9px 12px; border-radius: var(--radius-m); background: var(--tip-bg); color: var(--text);
+  border: 1px solid var(--line); box-shadow: var(--elev-2); font-size: 13px; line-height: 1.45;
   opacity: 0; visibility: hidden; transform: translateY(-3px); pointer-events: none;
-  transition: opacity .18s, transform .18s, visibility .18s; }
-.has-tip:has(.tipbtn:hover) .tip, .has-tip:has(.tipbtn:focus-visible) .tip { opacity: 1; visibility: visible; transform: none; }
+  transition: opacity .15s, transform .15s, visibility .15s; }
+.has-tip:has(.tipbtn:hover) .tip { transition-delay: .25s; }                 /* short delay before showing on hover */
+.has-tip:has(.tipbtn:is(:hover, :focus-visible)) .tip { opacity: 1; visibility: visible; transform: none; }
 ```
 ```html
-<span class="has-tip">Label <button type="button" class="tipbtn" aria-label="Details" aria-describedby="t1">i</button>
+<span class="has-tip">Label <button type="button" class="tipbtn" aria-label="More about label" aria-describedby="t1">i</button>
   <span class="tip" id="t1" role="tooltip">Explanation text</span></span>
 ```
+Keyboard focus shows it at once. Give the trigger at least a 24px hit area.
 
-SVG chart dots (the native `<title>` waits ~1s, so use a shared tooltip element and event delegation):
-```html
-<div class="chart-wrap" style="position:relative"><svg id="chart">…</svg><div class="ctip" id="ctip" role="tooltip" hidden></div></div>
-```
-```js
-// each dot: <g tabindex="0" role="img" aria-label="…" data-tip="line 1\nline 2"><circle class="dot" r="4.5"/><circle class="hit" r="12" fill="transparent"/></g>
-const ctip = document.getElementById("ctip"), wrap = ctip.parentElement;
-const hide = () => (ctip.hidden = true);
-function show(g) {
-  const box = wrap.getBoundingClientRect(), dot = g.querySelector(".dot").getBoundingClientRect();
-  ctip.textContent = g.dataset.tip; ctip.hidden = false;                       // CSS: white-space: pre-line; position: absolute
-  const w = ctip.offsetWidth, h = ctip.offsetHeight;
-  const cx = Math.min(Math.max(dot.left + dot.width / 2 - box.left, w / 2), box.width - w / 2);   // stay inside
-  const above = dot.top - box.top - h - 12 > 0;                                                    // flip when no room above
-  ctip.style.left = cx - w / 2 + "px";
-  ctip.style.top = (above ? dot.top - box.top - h - 10 : dot.bottom - box.top + 10) + "px";
-}
-const svg = document.getElementById("chart");
-svg.addEventListener("pointerover", (e) => { const g = e.target.closest("[data-tip]"); if (g) show(g); });
-svg.addEventListener("pointerout",  (e) => { if (e.target.closest("[data-tip]")) hide(); });
-svg.addEventListener("focusin",     (e) => { const g = e.target.closest("[data-tip]"); if (g) show(g); });
-svg.addEventListener("focusout", hide);
-```
-Hide the tooltip whenever the chart is redrawn.
-
-## Quiet emphasis for the best option
+## Numbered steps ("how it works")
 
 ```css
-.row .value { color: var(--muted); transition: color .3s; }
-.row.best .value { color: var(--text); }
-.row.best .fill { background: linear-gradient(90deg, var(--accent-a), var(--accent-b)); }   /* others keep a plain fill */
-```
-Add a visually hidden "(best)" text for screen readers instead of a visible badge.
-
-## Explainer: numbered steps
-
-```css
-.steps { list-style: none; counter-reset: step; margin: 22px 0 0; padding: 0; }
+.steps { list-style: none; counter-reset: step; margin: var(--space-5) 0 0; padding: 0; }
 .steps li { counter-increment: step; position: relative; padding-left: 42px; margin: 0 0 18px; color: var(--muted); max-width: 58ch; }
 .steps li::before { content: counter(step); position: absolute; left: 0; top: 1px; width: 26px; height: 26px; border-radius: 50%;
-  display: grid; place-items: center; font-size: 13px; font-weight: 600; color: var(--on-accent);
-  background: linear-gradient(120deg, var(--accent-a), var(--accent-b)); }
+  display: grid; place-items: center; font-size: 13px; font-weight: 600; color: var(--text); box-shadow: inset 0 0 0 1px var(--line); }
 .steps b { color: var(--text); font-weight: 600; }
-.explainer :is(p, li) { text-align: justify; hyphens: auto; }     /* needs <html lang="…">; keep headings left */
 ```
-Pair the steps with one small SVG worked example (two or three rows of nodes joined by lines, dates under each
-node) instead of a generic illustration.
+Pair the steps with one small diagram of the real thing instead of a generic illustration.
 
-## Wordmark with weight contrast
-
-```css
-.wordmark { font-family: "Bricolage Grotesque", var(--font); font-weight: 500; font-size: clamp(30px, 3.8vw, 42px);
-  line-height: 1; letter-spacing: -0.04em; font-variation-settings: "opsz" 48; }
-.wordmark b { color: var(--accent-a); font-weight: 800; }
-```
-```html
-<header class="brand"><svg class="logo" …/><span class="wordmark">First<b>Second</b></span></header>
-```
-Load the display face with its weights (`family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800`), and wrap both
-halves in one element so a flex `gap` doesn't split the word.
-
-## Quiet testimonial carousel (two quotes per slide)
+## Quotes, two per slide (manual carousel)
 
 All slides share one grid cell, so the block takes the tallest slide's height and nothing shifts on change.
 Manual only: auto-rotation adds motion and needs a pause control (WCAG 2.2.2).
@@ -541,9 +451,10 @@ Manual only: auto-rotation adds motion and needs a pause control (WCAG 2.2.2).
   opacity: 0; visibility: hidden; transform: translateY(6px);
   transition: opacity .5s ease, transform .5s ease, visibility 0s .5s; }
 .slide.on { opacity: 1; visibility: visible; transform: none; transition: opacity .5s ease, transform .5s ease; }
+.slide figure { margin: 0; }
 .slide figure + figure { border-left: 1px solid var(--line); padding-left: 48px; }
 .slide p { font: italic 300 clamp(20px, 2.4vw, 24px)/1.45 var(--display); }
-.slide cite { display: block; font-style: normal; font-size: 14px; color: var(--muted); margin-top: 16px; }
+.slide cite { display: block; font-style: normal; font-size: var(--text-s); color: var(--muted); margin-top: 16px; }
 .ctrl { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .ctrl button { width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: transparent; color: var(--text); }
 .ctrl button:hover { border-color: var(--text); }
@@ -576,4 +487,63 @@ const go = d => { s[i].classList.remove('on'); i = (i + d + s.length) % s.length
 document.getElementById('prev').onclick = () => go(-1);
 document.getElementById('next').onclick = () => go(1);
 ```
-Label sample quotes as samples until real ones exist.
+With two or fewer slides, skip the carousel and show them all. Label sample quotes as samples.
+
+## Wordmark with weight contrast
+
+```css
+.wordmark { font-family: var(--display); font-weight: 400; font-size: clamp(24px, 3vw, 34px);
+  line-height: 1; letter-spacing: -0.04em; }
+.wordmark b { color: var(--accent-a); font-weight: 800; }
+```
+```html
+<a class="brand" href="/" translate="no"><span class="wordmark">First<b>Second</b></span></a>
+```
+Wrap both halves in one element so a flex `gap` doesn't split the word.
+
+## Framed photo (personal sites)
+
+```css
+.photo-frame { border: 5px solid var(--surface); border-radius: var(--radius-l); overflow: hidden; box-shadow: var(--elev-2); }
+.photo-frame img { display: block; width: 100%; height: auto; }
+```
+Give the `<img>` its real `width`/`height`, `alt`, and `loading="lazy"` unless it is in the first viewport.
+
+## Louder options (only when the direction calls for them)
+
+**Soft glow background**
+```css
+body { background: radial-gradient(1200px 700px at 50% -10%, var(--bg-glow), transparent 70%), var(--bg-1); }
+```
+
+**Gradient on one headline word** (hero only)
+```css
+.gradient-text { background: linear-gradient(104deg, var(--accent-a), var(--accent-b)); -webkit-background-clip: text;
+  background-clip: text; color: transparent; }
+```
+
+**Faint patterns** (≤10% contrast)
+```css
+.bg-diagonal { background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0 1px, transparent 1px 48px); }  /* dark */
+.bg-grid { background-image: linear-gradient(rgba(0,0,0,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.05) 1px, transparent 1px);
+  background-size: 160px 160px; }                                                                                     /* light */
+```
+
+**Glass card** (deep navy/plum backgrounds)
+```css
+:root { --bg-1: #16206a; --bg-2: #1f3c8f; --bg-glow: #2f5fae; --text: #eef2ff; --muted: #b9c6ec; --line: rgba(160,185,255,.22);
+  --accent-a: #c9f6e4; --accent-b: #b8c6ff; --on-accent: #1b2560; color-scheme: dark; }
+.glass {
+  position: relative; border-radius: var(--radius-l); border: 1px solid rgba(255,255,255,.22);
+  background: linear-gradient(135deg, rgba(110,150,235,.5), rgba(90,170,150,.45));
+  box-shadow: 0 2px 6px rgba(5,10,50,.25), 0 30px 80px -20px rgba(5,10,50,.6), inset 0 1px 0 rgba(255,255,255,.25);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+/* To fade it in, fade the card as one piece and only move its children: fading children inside
+   backdrop-filter flickers in Chrome. */
+.js .glass[data-stage] { opacity: 0; transition: opacity 1s ease; }
+.js .glass[data-stage].is-visible { opacity: 1; }
+.js .glass[data-stage] > * { transform: translateY(12px); transition: transform 1s ease; }
+.js .glass[data-stage].is-visible > * { transform: none; }
+```
+Give staged cards `data-reveal="fade-in" data-stage` so the reveal script adds `is-visible`.
