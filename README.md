@@ -10,6 +10,15 @@ and check the result in a real browser.
 
 **Not for** web apps, product UIs, dashboards or internal tools. Those need different guidance.
 
+## Contents
+
+- [Install](#install)
+- [Use](#use)
+- [Examples](#examples)
+  - [Astrophotographer portfolio](#astrophotographer-portfolio)
+- [What's inside](#whats-inside)
+- [Contributing](#contributing)
+
 ## Install
 
 For all your projects:
