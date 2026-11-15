@@ -509,6 +509,56 @@ Wrap both halves in one element so a flex `gap` doesn't split the word.
 ```
 Give the `<img>` its real `width`/`height`, `alt`, and `loading="lazy"` unless it is in the first viewport.
 
+## Animation switch (pause control for ambient motion)
+
+Motion longer than 5 seconds needs a pause control (WCAG 2.2.2). Put it at the end of the header nav, styled
+like the nav links, so it reads as part of the chrome rather than a floating widget.
+
+```html
+<nav class="site-nav" aria-label="Main">
+  <a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a>
+  <button class="motion-switch" type="button" role="switch" aria-checked="true" hidden>
+    <span class="motion-switch-label">Animation</span>
+    <span class="switch" aria-hidden="true"><span class="switch-thumb"></span></span>
+  </button>
+</nav>
+```
+```css
+.site-nav { align-items: center; }
+.motion-switch { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0;
+  background: none; border: 0; color: var(--muted); cursor: pointer; transition: color var(--dur-fast); }
+.motion-switch[hidden] { display: none; }
+.motion-switch:hover { color: var(--text); }
+.switch { position: relative; width: 36px; height: 20px; border-radius: var(--radius-pill);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text) 35%, transparent); transition: background-color .25s, box-shadow .25s; }
+.switch-thumb { position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--muted); transition: transform .25s var(--ease-out), background-color .25s; }
+.motion-switch[aria-checked="true"] .switch { background: var(--accent-a); box-shadow: none; }
+.motion-switch[aria-checked="true"] .switch-thumb { transform: translateX(16px); background: var(--on-accent); }
+@media (max-width: 480px) {   /* word hidden visually, still the accessible name */
+  .motion-switch-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+@media (prefers-reduced-motion: reduce) { .switch, .switch-thumb { transition: none; } }
+/* CSS loops pause with the switch too */
+.motion-paused :is(*, *::before, *::after) { animation-play-state: paused !important; }
+```
+```js
+// Shown only when JS runs and motion is allowed. Loops listen for "motionchange" or check the class.
+(() => {
+  const sw = document.querySelector(".motion-switch");
+  if (!sw || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  sw.hidden = false;
+  sw.addEventListener("click", () => {
+    const paused = sw.getAttribute("aria-checked") === "true";
+    sw.setAttribute("aria-checked", !paused);
+    document.documentElement.classList.toggle("motion-paused", paused);
+    dispatchEvent(new CustomEvent("motionchange", { detail: { paused } }));
+  });
+})();
+```
+A canvas or JS loop should also stop drawing when it scrolls out of view (one IntersectionObserver) and render a
+single static frame under reduced motion. Check the header still fits at 375px with the switch added.
+
 ## Louder options (only when the direction calls for them)
 
 **Soft glow background**

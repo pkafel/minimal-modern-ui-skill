@@ -19,6 +19,15 @@ person's reactions on specific projects: treat them as things to check with your
   it below the fine print.
 - **Dividers double section padding.** 80px top and bottom put about 160px around each hairline, which read as
   too loose. 56px desktop / 40px mobile worked.
+- **Pause control for ambient motion: a labeled switch in the nav.** A hero starfield needed a pause control.
+  A "Pause stars" pill at the bottom of the hero looked out of place above the next section; moved to the hero's
+  top-right corner it still floated; an icon-only pause/play button in the nav was "barely visible". Accepted: a
+  `role="switch"` at the end of the nav, the word "Animation" in the nav-link style plus a small track that fills
+  with the accent when on. Below ~480px only the track shows, and the word stays as the accessible name.
+- **Bottom-anchored hero copy on tall screens.** A full-viewport hero with `align-content: end` looked right on
+  a 14" laptop but left the headline at the very bottom of a 24" monitor (full or half width), under a tall empty
+  sky. Centering the copy and capping the hero (`min-height: clamp(560px, 100svh - header, 920px)`, with the
+  background layer capped the same) fixed it. Check full-height heroes in a tall window, not only a laptop.
 - **Last section + footer padding.** 72px under the last section plus the footer's 32px read as slightly too
   much; 40px was better.
 - **Unstyled links on a dark page.** Headlines as `<a>` without a color fell back to the browser's dark blue and
@@ -53,6 +62,15 @@ person's reactions on specific projects: treat them as things to check with your
   width still felt empty. Two quotes per row with a hairline between them, paged in pairs, was accepted.
 - **Highlight by dimming, not decorating.** Badges and tinted boxes to mark "the best one" were rejected; a
   brighter value with the rest dimmed was accepted.
+- **A plain minimal hero can undersell visual work.** On an astrophotographer's site the quiet-dark hero (headline
+  plus one small framed image) was judged less appealing than a freeform version's first screen: full-viewport
+  animated starfield, a large planet cropped at the edge, a big serif headline with one italic accent word and a
+  stats row. The accepted result kept that immersive hero and the minimal sections below it.
+- **Contact channels: rows, not a display email or icon cards.** A display-size email address (≈40px light) was
+  out of proportion with the rest of the page. Replacing it with a two-column grid of rows, each with an icon in a
+  ringed circle, a mono purpose label, the value and an always-on arrow, was "way better" but too busy. Accepted:
+  one column of hairline rows like the work list: small dim outline icon, channel name, muted value on the right,
+  accent color and an arrow only on hover or focus, whole row as the link.
 - **Copy must match behavior.** After changing what a form or page does, re-read every sentence that explains
   it; a line can quietly become wrong.
 
@@ -67,7 +85,8 @@ person's reactions on specific projects: treat them as things to check with your
 - For hover states, dispatch `pointerover`/`pointerout` events to test the logic, then confirm with a real hover.
 - Prove layout claims with numbers: `getBoundingClientRect()` for gaps and alignment, `getComputedStyle()` for
   colors and fonts, `document.fonts.check()` that web fonts loaded.
-- Test the ends of the range: a very tall window (footer stays at the bottom), a narrow one, a very wide one
+- Test the ends of the range: a very tall window (footer stays at the bottom; full-height heroes keep their copy
+  where intended), a narrow one, a very wide one
   (zoom out to 50%), reduced motion, dark mode, keyboard-only, JS disabled.
 - On macOS, set scroll bars to "Always show" (System Settings → Appearance) to see the layout Windows users
   get; unexpected scrollbars point at overflow bugs.

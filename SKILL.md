@@ -51,13 +51,15 @@ element should carry meaning; decoration that doesn't is removed.
 | Editorial | Serif for display or body, generous measure, outlined buttons | Long-form writing, books, culture; can read dated to tech audiences, so show it live first |
 | Soft glow | Quiet base plus one subtle gradient or radial glow, optional frosted surface | Landing pages that need some warmth |
 | One bold block | Quiet base plus one full-bleed color block or framed photo | Portfolios, events, personal brands |
+| Immersive hero, quiet body | One atmospheric full-viewport first screen (imagery, a slow ambient effect, a display face for the headline only), then the quiet sections below | Photographers, artists, visual subjects where the work itself is the draw |
 
 - **Tone beats novelty.** A serious subject wants calm and credible; playful fonts and loud effects usually
   get rejected there.
 - **Match the audience's conventions.** Tech audiences tend to expect a neutral sans on near-white or
   near-black with one crisp accent; other audiences have their own. When proposing several directions, make
   them differ in layout and surfaces (list page, sticky split, card grid, one color block), not only in font
-  and paper color, so the user chooses between real alternatives.
+  and paper color, so the user chooses between real alternatives. For visual subjects, include an immersive
+  hero option: a plain minimal hero can read flat there (see lessons).
 - **When taste is unknown, try it live.** Swap the font, the accent or the spacing in the real page and let the
   user react. Expect a few rounds.
 - **The user's taste outranks this guide.** Once they accept or reject a direction, write it in the project
@@ -97,8 +99,10 @@ copied over.
 
 **Personal site / portfolio**
 - Name and one line on what the person does, then short sections: work or projects, writing, about, contact.
-- Lists with hairlines beat card grids for projects and posts; one framed photo is enough imagery.
-- Contact is a plain link (email, profiles), not a form, unless the user asks for one.
+- Lists with hairlines beat card grids for projects and posts; one framed photo is enough imagery, except for
+  visual work (photography, art), where the first screen can carry the imagery full-bleed before the quiet lists.
+- Contact is a plain link (email, profiles), not a form, unless the user asks for one. Several channels read
+  best as the same hairline rows as the rest of the page, not as oversized text or icon cards (see lessons).
 
 **Blog index**
 - A list, not cards: title, date (`<time datetime>`), optionally a one-line summary. Group by year once there
@@ -171,7 +175,8 @@ Motion should help someone see what changed or where to look. On these sites, le
 - **Hover/focus**: buttons scale about 1.02–1.06 or lift; nav and text links get a 2px underline sliding in
   from the left, also on `:focus-visible`.
 - **Ambient motion**: at most one slow loop, or none. Looping media is a muted `<video>`, not a GIF, and
-  motion longer than 5 seconds needs a pause control.
+  motion longer than 5 seconds needs a pause control. Put it in the header nav as a labeled switch
+  ("Animation"), not a floating button or a bare icon (see snippets and lessons).
 - **Glass flicker (Chrome)**: don't fade a `backdrop-filter` element's children or animate its blur (see lessons).
 
 ## 8. Interaction patterns
@@ -224,7 +229,7 @@ consent for EU visitors), hosting, domain redirects. Details are in
 ## 12. Verify in a real browser
 
 Screenshots after scrolling, computed styles for end states, geometry for layout claims, keyboard tab order,
-narrow, short and very wide viewports (zoom out to 50% to fake ultra-wide), reduced motion, dark mode, and
+narrow, short, very tall (half of a large monitor) and very wide viewports (zoom out to 50% to fake ultra-wide), reduced motion, dark mode, and
 Safari if available. Background tabs throttle animations, so a screenshot forces a render. Use whatever browser
 tool the session has; with none, serve the page and give the user a short, specific list of things to check
 instead of claiming it works. Tips are in [references/lessons.md](references/lessons.md).
