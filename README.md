@@ -8,8 +8,6 @@ and shared components so every page matches, lay out each page type, set readabl
 motion, meet an accessibility and performance baseline, ship (SEO, social preview, RSS, analytics, hosting)
 and check the result in a real browser.
 
-**Not for** web apps, product UIs, dashboards or internal tools. Those need different guidance.
-
 ## Contents
 
 - [Install](#install)
