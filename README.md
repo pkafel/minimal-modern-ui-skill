@@ -47,20 +47,6 @@ Or invoke it directly with `/minimal-modern-ui`.
 
 > Design a web page for a photographer who is into space, planets and stars photography. Use /minimal-modern-ui skill.
 
-The result was then refined over a few follow-up rounds: the hero, the contact section and the placement of
-the animation switch. It's a one-page portfolio in the **immersive hero, quiet body** direction:
-
-- **First screen:** a full-viewport animated starfield with a cropped planet. A display serif is used for the
-  headline and stats only, with one amber accent word. The text is centred and the hero height is capped, so it
-  holds up on tall monitors.
-- **Below it:** quiet near-black sections in a neutral sans. Work, gear, prints and contact are hairline rows,
-  with a monospace for capture data.
-- **Motion:** twinkling stars and the occasional shooting star, paused with an "Animation" switch in the nav.
-  The stars are static under reduced motion.
-
-Several details in the skill came from building it: see the matching entries in
-[`references/lessons.md`](references/lessons.md).
-
 ## What's inside
 
 | File | Contents |
