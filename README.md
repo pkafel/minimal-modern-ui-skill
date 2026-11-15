@@ -37,6 +37,30 @@ Ask for what you want and Claude loads the skill when it fits:
 
 Or invoke it directly with `/minimal-modern-ui`.
 
+## Examples
+
+### Astrophotographer portfolio
+
+![First screen of a dark astrophotography portfolio: a large serif headline "Light that left before we did." with "before" in warm amber italic, a starfield background, a ringed planet cropped at the right edge, and an "Animation" switch at the end of the nav](docs/examples/astro-photography.png)
+
+**Prompt:**
+
+> Design a web page for a photographer who is into space, planets and stars photography. Use /minimal-modern-ui skill.
+
+The result was then refined over a few follow-up rounds: the hero, the contact section and the placement of
+the animation switch. It's a one-page portfolio in the **immersive hero, quiet body** direction:
+
+- **First screen:** a full-viewport animated starfield with a cropped planet. A display serif is used for the
+  headline and stats only, with one amber accent word. The text is centred and the hero height is capped, so it
+  holds up on tall monitors.
+- **Below it:** quiet near-black sections in a neutral sans. Work, gear, prints and contact are hairline rows,
+  with a monospace for capture data.
+- **Motion:** twinkling stars and the occasional shooting star, paused with an "Animation" switch in the nav.
+  The stars are static under reduced motion.
+
+Several details in the skill came from building it: see the matching entries in
+[`references/lessons.md`](references/lessons.md).
+
 ## What's inside
 
 | File | Contents |
