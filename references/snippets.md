@@ -371,6 +371,10 @@ reveal's duration and delay would also slow the hover. Don't reveal paragraphs o
     if (!e.isIntersecting) return;
     e.target.classList.add("is-visible");
     io.unobserve(e.target);                       // play once
+    // Clear the reveal timing afterwards, or later hover transitions inherit its duration and stagger delay.
+    const items = e.target.dataset.stagger ? [...e.target.children] : [e.target];
+    const wait = Math.max(...items.map((el) => (parseFloat(el.style.transitionDuration) || 0) + (parseFloat(el.style.transitionDelay) || 0)));
+    setTimeout(() => items.forEach((el) => { el.style.transitionDuration = ""; el.style.transitionDelay = ""; }), wait + 50);
   }), { threshold: 0.25 });
   els.forEach((el) => io.observe(el));
 })();

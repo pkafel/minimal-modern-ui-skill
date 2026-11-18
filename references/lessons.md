@@ -11,6 +11,9 @@ person's reactions on specific projects: treat them as things to check with your
 - **Inline styles beat state classes.** A reveal script that set `style.transform` left elements permanently
   offset, because the inline value out-ranked `.is-visible { transform: none }`. Set a custom property inline
   and let the stylesheet use it.
+- **Reveal timing leaks into hover.** The reveal script sets `transition-duration` and `transition-delay` inline.
+  Left in place, they also applied to later hover transitions on the same elements, so rows further down a
+  staggered list reacted up to half a second late. Clear both inline values once the reveal has finished.
 - **Margin collapse.** A top margin on the first block collapses through `<body>`. With `min-height: 100vh` it
   adds an unwanted scroll. Use `padding-top` on the wrapper.
 - **A reserved empty message row floats the next line.** A min-height status row under a form, plus its margin
@@ -66,6 +69,12 @@ person's reactions on specific projects: treat them as things to check with your
   plus one small framed image) was judged less appealing than a freeform version's first screen: full-viewport
   animated starfield, a large planet cropped at the edge, a big serif headline with one italic accent word and a
   stats row. The accepted result kept that immersive hero and the minimal sections below it.
+- **Accents below an immersive hero: open question, not a pattern.** After a dramatic hero, the quiet body read
+  as "very homogeneous" and dull. Small color accents echoing the hero were accepted: an accent ✦ before section
+  headings, one serif pull line with an italic accent word, accent prices. Hover effects on list rows (accent
+  title, line drawing in, other rows dimmed), sticky section headings and a scroll-synced nav highlight were
+  judged "almost too much", and the user was unsure about how far the body had been pushed. Prefer the color
+  accents, and check with the user before adding motion or highlight effects to the body.
 - **Contact channels: rows, not a display email or icon cards.** A display-size email address (≈40px light) was
   out of proportion with the rest of the page. Replacing it with a two-column grid of rows, each with an icon in a
   ringed circle, a mono purpose label, the value and an always-on arrow, was "way better" but too busy. Accepted:
