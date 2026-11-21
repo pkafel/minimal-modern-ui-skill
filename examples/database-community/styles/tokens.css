@@ -1,0 +1,26 @@
+/* Quiet dark, fixed scheme. Pages and components use these, never raw values. */
+:root {
+  color-scheme: dark;
+  /* color */
+  --bg-1: #0d0e10; --surface: #15171a; --surface-2: #1b1d21;
+  --text: #ececee; --muted: #a4a4ad; --dim: #8a8a94; --line: rgba(255,255,255,.1); --line-strong: rgba(255,255,255,.22);
+  --accent-a: #f2b64c; --on-accent: #17130a;
+  --field-bg: #15171a; --code-bg: #121417;
+  --shadow: rgba(0,0,0,.45); --glow: rgba(242,182,76,.28); --bg-glow: rgba(242,182,76,.07);
+  /* syntax (plan panel) */
+  --syn-key: #f2b64c; --syn-node: #ececee; --syn-num: #9fd3c7; --syn-dim: #8a8a94;
+  --elev-1: 0 1px 2px var(--shadow), 0 4px 12px var(--shadow);
+  --elev-2: 0 1px 2px var(--shadow), 0 24px 48px -12px var(--shadow);
+  /* type */
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --display: var(--font);
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --text-xs: 13px; --text-s: 14px; --text-m: 16px; --text-read: clamp(17px, 1rem + .2vw, 18px); --text-l: 20px;
+  --text-xl: clamp(26px, 3vw, 34px); --text-hero: clamp(38px, 5.6vw, 64px);
+  --measure: 64ch;
+  /* space, shape, motion */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 40px; --space-7: 56px; --space-8: 96px;
+  --radius-s: 6px; --radius-m: 10px; --radius-l: 14px; --radius-pill: 999px;
+  --ease-out: cubic-bezier(.2,.8,.2,1); --dur-fast: .2s; --dur: .5s;
+  --header-h: 76px;
+}
