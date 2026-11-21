@@ -1,0 +1,12 @@
+{
+  "name": "minimal-modern-ui-skill",
+  "description": "The minimal-modern-ui skill for Claude Code",
+  "owner": { "name": "pkafel" },
+  "plugins": [
+    {
+      "name": "minimal-modern-ui",
+      "source": "./",
+      "description": "Build minimal, clean, modern personal sites, portfolios, landing pages and blogs in plain HTML, CSS and JS."
+    }
+  ]
+}

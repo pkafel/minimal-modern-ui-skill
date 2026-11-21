@@ -1,0 +1,9 @@
+{
+  "name": "minimal-modern-ui",
+  "description": "Build minimal, clean, modern personal sites, portfolios, landing pages and blogs in plain HTML, CSS and JS.",
+  "author": { "name": "pkafel" },
+  "homepage": "https://pkafel.github.io/minimal-modern-ui-skill/",
+  "repository": "https://github.com/pkafel/minimal-modern-ui-skill",
+  "license": "MIT",
+  "keywords": ["skill", "web design", "landing page", "personal site", "blog", "html", "css"]
+}
