@@ -150,7 +150,7 @@ frame: a margin collapses through `<body>` and adds scroll with `min-height: 100
 .site-header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); padding-block: var(--space-4); }
 .brand { font-weight: 600; text-decoration: none; }
 .site-nav { display: flex; gap: var(--space-5); }
-/* Full text color at rest: muted nav links read as disabled (see lessons). The underline is the feedback. */
+/* Full text color at rest: muted nav links read as disabled (see defaults). The underline is the feedback. */
 .site-nav a { position: relative; color: var(--text); text-decoration: none; padding: 10px 0; }
 .site-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 4px; height: 2px; border-radius: 2px;
   background: var(--accent-a); transform: scaleX(0); transform-origin: left; transition: transform .3s ease; }
@@ -304,7 +304,7 @@ document.documentElement.classList.replace("no-js", "js");
 addEventListener("load", () => requestAnimationFrame(() => document.body.classList.remove("is-loading")));
 ```
 
-## Scroll reveals (optional; modeled on Carrd's reveal presets)
+## Scroll reveals (optional; modeled on common site-builder reveal presets)
 
 Markup: `data-reveal="fade-up|fade-down|fade-left|fade-right|fade-in|zoom-in|zoom-out|zoom-out-image|pop-in|blur-in"`,
 optional `data-i` (intensity 0–5 → distance 6px + 4.2px × i), `data-delay` (ms), `data-speed` (ms,
@@ -360,7 +360,7 @@ reveal's duration and delay would also slow the hover. Don't reveal paragraphs o
   };
   const els = document.querySelectorAll("[data-reveal]");
   els.forEach((el) => {
-    const effect = el.dataset.reveal, d = 6 + 4.2 * +(el.dataset.i || 1);   // Carrd intensity ladder
+    const effect = el.dataset.reveal, d = 6 + 4.2 * +(el.dataset.i || 1);   // intensity ladder: 6px + 4.2px per step
     const speed = +(el.dataset.speed || 1000), delay = +(el.dataset.delay || 0);
     const stagger = el.dataset.stagger;
     if (stagger) [...el.children].slice(0, 8).forEach((c, i) => prep(c, effect, d, speed, delay + i * +stagger));

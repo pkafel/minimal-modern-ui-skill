@@ -1,6 +1,6 @@
 ---
 name: minimal-modern-ui
-description: Build or restyle minimal, clean, modern websites for people and small launches - personal sites, portfolios, landing pages and blogs - in plain HTML/CSS/JS that works with any stack. Covers choosing a quiet direction, design tokens and shared components so every page matches, page recipes (landing, personal, blog index, blog post), reading typography, restrained motion, accessible forms and disclosures, the accessibility and performance baseline, shipping (SEO, social preview, RSS, analytics, hosting) and verifying in a real browser. Use when asked for a "modern", "clean", "minimal", "polished" personal site, landing page or blog. Not for web apps, product UIs, dashboards or internal tools.
+description: Build or restyle minimal, clean, modern websites for people and small launches - personal sites, portfolios, landing pages and blogs - in plain HTML/CSS/JS that works with any stack. Covers choosing a quiet direction, design tokens and shared components so every page matches, page recipes (landing, personal, blog index, blog post), reading typography, restrained motion, accessible forms and disclosures, the accessibility and performance baseline, and verifying in a real browser. Use when asked for a "modern", "clean", "minimal", "polished" personal site, landing page or blog. Not for web apps, product UIs, dashboards or internal tools.
 ---
 
 # Minimal modern UI: minimal sites that feel finished
@@ -19,23 +19,23 @@ Supporting files (read when needed):
 - [references/snippets.md](references/snippets.md): copy-paste building blocks (tokens, base, prose, post list, forms, motion).
 - [references/interface-checklist.md](references/interface-checklist.md): detailed interaction, form, content
   and performance checks, adapted from Vercel's Web Interface Guidelines.
-- [references/ship-checklist.md](references/ship-checklist.md): SEO, social preview, RSS, analytics, hosting.
-- [references/lessons.md](references/lessons.md): pitfalls and browser-verification tips from real projects.
-- [references/templates.md](references/templates.md): measurements from 10 Carrd landing-page templates
-  (cited by Carrd's template number, e.g. #304). Reference data to calibrate your eye, not rules.
+- [references/defaults.md](references/defaults.md): concrete default values (spacing, header sizes, section
+  headings, contact rows) and fixes for common CSS and motion pitfalls.
+- [references/templates.md](references/templates.md): measurements from ten landing-page templates. Reference
+  data to calibrate your eye, not rules.
 
 ## 1. Workflow
 
 1. **Understand the job.** Whose site, for whom, the one thing a visitor should do or learn, the pages needed,
-   and what "done" means. Ask when the answer changes the build: the final domain, whether to track visitors,
-   who owns the copy, and whether there is existing content (posts, projects) to bring in.
+   and what "done" means. Ask when the answer changes the build: who owns the copy, and whether there is
+   existing content (posts, projects) to bring in.
 2. **Set the direction** (§2) and write it down: color tokens, a type pairing, a spacing and radius scale and a
    motion personality, in the project notes (CLAUDE.md, AGENTS.md or README) so later sessions stay consistent.
 3. **Set up the shared pieces** (§3) before the first page: tokens, base styles, layout primitives, components
    and one source for the header, footer and `<head>`. Every page, including the first, is built from these.
 4. **Real copy first.** Placeholder text hides layout problems. Follow the page recipe (§4).
 5. **Build static, responsive and accessible**, then add motion, then polish.
-6. **Ship** (§11), **verify in a browser** (§12), then do the **restraint pass** (§13).
+6. **Verify in a browser** (§11), then do the **restraint pass** (§12).
 7. **Iterate in small, visible steps.** One change at a time, look at it, ask for taste calls instead of
    guessing, say plainly what was and wasn't verified, and only commit or publish when asked.
 
@@ -59,7 +59,7 @@ element should carry meaning; decoration that doesn't is removed.
   near-black with one crisp accent; other audiences have their own. When proposing several directions, make
   them differ in layout and surfaces (list page, sticky split, card grid, one color block), not only in font
   and paper color, so the user chooses between real alternatives. For visual subjects, include an immersive
-  hero option: a plain minimal hero can read flat there (see lessons).
+  hero option: a plain minimal hero can read flat there (see defaults).
 - **When taste is unknown, try it live.** Swap the font, the accent or the spacing in the real page and let the
   user react. Expect a few rounds.
 - **The user's taste outranks this guide.** Once they accept or reject a direction, write it in the project
@@ -102,7 +102,7 @@ copied over.
 - Lists with hairlines beat card grids for projects and posts; one framed photo is enough imagery, except for
   visual work (photography, art), where the first screen can carry the imagery full-bleed before the quiet lists.
 - Contact is a plain link (email, profiles), not a form, unless the user asks for one. Several channels read
-  best as the same hairline rows as the rest of the page, not as oversized text or icon cards (see lessons).
+  best as the same hairline rows as the rest of the page, not as oversized text or icon cards (see defaults).
 
 **Blog index**
 - A list, not cards: title, date (`<time datetime>`), optionally a one-line summary. Group by year once there
@@ -114,9 +114,11 @@ copied over.
 - Title, date and optional reading time at the top; headings with anchors and `scroll-margin-top`; a table of
   contents only for long posts.
 - Figures with captions may break wider than the text; code blocks scroll inside themselves, never the page.
-- End with a next step: previous/next posts or a short list of more, plus the RSS link.
+- End with a next step: previous/next posts or a short list of more, plus the RSS link if the site has a feed.
 
 **Shared across types**
+- **Page essentials** in the shared `<head>`: every page has `<html lang>`, a unique `<title>` and meta
+  description, a favicon, `theme-color`, and Open Graph title and description.
 - **Header: a nav or nothing.** A single lonely button opposite the brand looks unfinished.
 - **Footer at the bottom**, also on short pages (full-height flex column), with no stray margin under it.
 - **Design every state**: empty (no posts yet), very long titles, missing images, a 404 page in the site's look.
@@ -176,8 +178,8 @@ Motion should help someone see what changed or where to look. On these sites, le
   from the left, also on `:focus-visible`.
 - **Ambient motion**: at most one slow loop, or none. Looping media is a muted `<video>`, not a GIF, and
   motion longer than 5 seconds needs a pause control. Put it in the header nav as a labeled switch
-  ("Animation"), not a floating button or a bare icon (see snippets and lessons).
-- **Glass flicker (Chrome)**: don't fade a `backdrop-filter` element's children or animate its blur (see lessons).
+  ("Animation"), not a floating button or a bare icon (see snippets and defaults).
+- **Glass flicker (Chrome)**: don't fade a `backdrop-filter` element's children or animate its blur (see defaults).
 
 ## 8. Interaction patterns
 
@@ -219,22 +221,25 @@ If the site already has a build or templating setup, put the tokens in its globa
 footer and head in its shared layout or includes, and keep the components' markup and class names. If it has
 none, plain files are fine: the layer structure in snippets works without any tooling.
 
-## 11. Ship checklist
+## 11. Verify in a real browser
 
-Before calling it done: titles and descriptions per page, canonical and social preview, favicon, structured
-data (Person, BlogPosting or WebSite), `robots.txt` and sitemap, an RSS feed for blogs, analytics (ask first;
-consent for EU visitors), hosting, domain redirects. Details are in
-[references/ship-checklist.md](references/ship-checklist.md).
+Use whatever browser tool the session has, and prove claims with numbers rather than impressions:
+- **Screenshots after scrolling**, plus `getBoundingClientRect()` for gaps and alignment, `getComputedStyle()`
+  for end-state colors and fonts, and `document.fonts.check()` that web fonts loaded.
+- **The ends of the range**: narrow, short, very tall (half of a large monitor: the footer stays at the bottom
+  and full-height heroes keep their copy in place) and very wide (zoom out to 50%); also keyboard tab order,
+  reduced motion, dark mode, JS disabled, and Safari if available. On macOS, "Always show" scroll bars reveal
+  overflow bugs.
+- **Tool quirks**: background tabs throttle timers, animations and IntersectionObserver, so take a screenshot to
+  force a render, wait, and take another. A hash-only navigation doesn't reload; add a throwaway query
+  (`?r=2#section`). Some tools take click coordinates in the screenshot's scaled frame (ratio = frame width ÷
+  `innerWidth`). Test hover logic by dispatching `pointerover`/`pointerout`, then confirm with a real hover.
+- **No browser tool?** Playwright can screenshot several widths (`npx playwright install chromium`, then
+  `npx playwright screenshot --viewport-size "375,800" URL out.png`); otherwise give the user a short, specific
+  list of things to check instead of claiming it works.
+- Close tabs you opened, and stop dev servers you started when the user asks.
 
-## 12. Verify in a real browser
-
-Screenshots after scrolling, computed styles for end states, geometry for layout claims, keyboard tab order,
-narrow, short, very tall (half of a large monitor) and very wide viewports (zoom out to 50% to fake ultra-wide), reduced motion, dark mode, and
-Safari if available. Background tabs throttle animations, so a screenshot forces a render. Use whatever browser
-tool the session has; with none, serve the page and give the user a short, specific list of things to check
-instead of claiming it works. Tips are in [references/lessons.md](references/lessons.md).
-
-## 13. Restraint pass
+## 12. Restraint pass
 
 Before handing over, remove: any animation that doesn't help someone see what changed, any label a quieter
 treatment could replace, any color or size that isn't a token, any page-level style that duplicates a shared
