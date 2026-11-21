@@ -37,6 +37,13 @@ person's reactions on specific projects: treat them as things to check with your
   were unreadable on a charcoal card. Set `a { color: inherit }` globally and give links a hover state.
 - **Lonely header button.** A single "Subscribe" pill in the top-right corner looked odd. Three section links
   with a sliding underline replaced it.
+- **Header too small next to a big hero.** On a dark community landing page, a 22px wordmark, 14px nav links
+  and a 64px bar looked undersized under a 64px hero headline, even though the wordmark was in the
+  1.2–1.6× range relative to the section headings. Accepted: a 27px wordmark, 16px nav links with a 40px gap, and a 76px bar.
+  Judge header size against the hero headline, not only the section headings.
+- **Muted nav links read as disabled on dark.** Nav links in `--muted` gray (brightening on hover) looked dim
+  and inactive in a dark sticky header. Accepted: links in the full text color at rest, with the sliding
+  accent underline as the only hover/focus feedback. Ask before defaulting to muted nav links.
 - **Section heading size on a personal home page.** 12px muted uppercase labels were too faint to mark
   sections; 26–32px medium competed with the hero; about 20px semibold in the text color worked. Use real
   `<h2>`s, not styled `<p>`s.

@@ -150,10 +150,10 @@ frame: a margin collapses through `<body>` and adds scroll with `min-height: 100
 .site-header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); padding-block: var(--space-4); }
 .brand { font-weight: 600; text-decoration: none; }
 .site-nav { display: flex; gap: var(--space-5); }
-.site-nav a { position: relative; color: var(--muted); text-decoration: none; padding: 10px 0; transition: color var(--dur-fast); }
+/* Full text color at rest: muted nav links read as disabled (see lessons). The underline is the feedback. */
+.site-nav a { position: relative; color: var(--text); text-decoration: none; padding: 10px 0; }
 .site-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 4px; height: 2px; border-radius: 2px;
   background: var(--accent-a); transform: scaleX(0); transform-origin: left; transition: transform .3s ease; }
-.site-nav a:is(:hover, :focus-visible, [aria-current="page"]) { color: var(--text); }
 .site-nav a:is(:hover, :focus-visible, [aria-current="page"])::after { transform: scaleX(1); }
 @media (prefers-reduced-motion: reduce) { .site-nav a::after { transition: none; } }
 ```
@@ -530,9 +530,8 @@ like the nav links, so it reads as part of the chrome rather than a floating wid
 ```css
 .site-nav { align-items: center; }
 .motion-switch { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0;
-  background: none; border: 0; color: var(--muted); cursor: pointer; transition: color var(--dur-fast); }
+  background: none; border: 0; color: var(--text); cursor: pointer; }   /* same color as the nav links */
 .motion-switch[hidden] { display: none; }
-.motion-switch:hover { color: var(--text); }
 .switch { position: relative; width: 36px; height: 20px; border-radius: var(--radius-pill);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text) 35%, transparent); transition: background-color .25s, box-shadow .25s; }
 .switch-thumb { position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%;
