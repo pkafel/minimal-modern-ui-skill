@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mira Halden — Astrophotography</title>
+<meta name="description" content="Deep-sky, planetary and nightscape photographs by Mira Halden, made over long nights under dark skies.">
+<meta name="theme-color" content="#0a0a0c">
+<script>document.documentElement.classList.replace("no-js", "js");</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/main.css">
+<script src="scripts/site.js" defer></script>
+</head>
+<body class="is-loading">
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="sky" aria-hidden="true">
+  <canvas class="sky-canvas"></canvas>
+  <svg class="sky-planet" viewBox="0 0 800 900" width="800" height="900">
+    <defs>
+      <linearGradient id="bands" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#b8a07a"/><stop offset=".18" stop-color="#d9c49d"/>
+        <stop offset=".3" stop-color="#c4a274"/><stop offset=".42" stop-color="#ead8b4"/>
+        <stop offset=".55" stop-color="#cfae80"/><stop offset=".68" stop-color="#e6d2ad"/>
+        <stop offset=".82" stop-color="#b58f62"/><stop offset="1" stop-color="#8f6e4c"/>
+      </linearGradient>
+      <radialGradient id="shade" cx="32%" cy="30%" r="80%">
+        <stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset=".55" stop-color="#000" stop-opacity=".2"/>
+        <stop offset="1" stop-color="#000" stop-opacity=".95"/>
+      </radialGradient>
+      <clipPath id="front"><rect x="0" y="450" width="800" height="450"/></clipPath>
+    </defs>
+    <g transform="rotate(-18 400 450)">
+      <ellipse cx="400" cy="450" rx="330" ry="78" fill="none" stroke="#d8c3a0" stroke-opacity=".45" stroke-width="26"/>
+      <ellipse cx="400" cy="450" rx="290" ry="66" fill="none" stroke="#a89272" stroke-opacity=".4" stroke-width="12"/>
+      <circle cx="400" cy="450" r="170" fill="url(#bands)"/>
+      <circle cx="400" cy="450" r="170" fill="url(#shade)"/>
+      <g clip-path="url(#front)">
+        <ellipse cx="400" cy="450" rx="330" ry="78" fill="none" stroke="#e2cfac" stroke-opacity=".75" stroke-width="26"/>
+        <ellipse cx="400" cy="450" rx="290" ry="66" fill="none" stroke="#b49d7b" stroke-opacity=".7" stroke-width="12"/>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<div class="frame">
+  <header class="site-header">
+    <a class="brand" href="#top" translate="no" aria-label="Mira Halden, home"><span class="wordmark">Mira<b>Halden</b></span></a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <button class="sky-toggle" type="button" role="switch" aria-checked="true" hidden>
+        <span class="sky-toggle-label">Animation</span>
+        <span class="switch" aria-hidden="true"><span class="switch-thumb"></span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main" class="site-main" tabindex="-1">
+
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="hero-copy stack" style="--stack-gap: var(--space-5)">
+        <p class="meta" data-reveal data-i="0">Astrophotographer · Atacama &amp; New Mexico</p>
+        <h1 class="hero-title" data-reveal data-i="0">Light that left <em>before</em> we did.</h1>
+        <p class="lead" data-reveal data-i="1">Nebulae, planets and dark-sky landscapes, built from tens of hours of exposure and processed by hand.</p>
+        <div class="actions" data-reveal data-i="2" data-delay="150">
+          <a class="btn" href="#work">See the work <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--outline" href="#contact">Get in touch</a>
+        </div>
+        <dl class="hero-stats" data-reveal data-i="2" data-delay="300" data-stagger="110">
+          <div><dt>Total integration</dt><dd class="num">1,240&nbsp;h</dd></div>
+          <div><dt>Darkest sky shot</dt><dd>Bortle&nbsp;1</dd></div>
+          <div><dt>Messier objects</dt><dd class="num">37</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Work -->
+    <section class="section rail" id="work">
+      <h2>Selected work</h2>
+      <ul class="work-list" data-reveal data-i="1" data-stagger="110">
+        <li>
+          <span class="title">The Great Nebula in Orion</span>
+          <time datetime="2026">2026</time>
+          <span class="meta">M42 · 34&nbsp;h · Hα, OIII, RGB · La Palma</span>
+        </li>
+        <li>
+          <span class="title">Jupiter, with Io leaving the limb</span>
+          <time datetime="2025">2025</time>
+          <span class="meta">Lucky imaging · best 4,800 of 60,000 frames · New Mexico</span>
+        </li>
+        <li>
+          <span class="title">Galactic core over the Andes</span>
+          <time datetime="2025">2025</time>
+          <span class="meta">Nightscape · 8 × 240&nbsp;s tracked · 14&nbsp;mm · Atacama</span>
+        </li>
+        <li>
+          <span class="title">Andromeda and M110</span>
+          <time datetime="2024">2024</time>
+          <span class="meta">M31 · 22&nbsp;h · LRGB + Hα · Namibia</span>
+        </li>
+        <li>
+          <span class="title">The terminator, in 42 panels</span>
+          <time datetime="2024">2024</time>
+          <span class="meta">Lunar mosaic · 2,800&nbsp;mm · IR-pass 685&nbsp;nm</span>
+        </li>
+        <li>
+          <span class="title">Pillars of the Eagle</span>
+          <time datetime="2023">2023</time>
+          <span class="meta">M16 · 48&nbsp;h · SII, Hα, OIII · remote observatory</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- About -->
+    <section class="section rail" id="about">
+      <h2>About</h2>
+      <div class="stack" style="--stack-gap: var(--space-6)">
+        <div class="prose">
+          <p class="pull">I spend most nights in the <em>cold</em>, waiting for the air to settle.</p>
+          <p>A single image often holds 20 to 60 hours of exposure, gathered over weeks and calibrated by hand.</p>
+          <p>I travel to the darkest skies I can reach (the Atacama, Namibia, La Palma) and run a small remote observatory in New Mexico for everything else.</p>
+        </div>
+        <dl class="spec" aria-label="Equipment">
+          <dt>Telescopes</dt><dd>Takahashi FSQ-106 · Celestron EdgeHD&nbsp;11″</dd>
+          <dt>Camera</dt><dd>ZWO ASI6200MM Pro, cooled to −10&nbsp;°C</dd>
+          <dt>Mount</dt><dd>10Micron GM1000 HPS</dd>
+          <dt>Filters</dt><dd>3&nbsp;nm Hα, OIII, SII · LRGB</dd>
+          <dt>Processing</dt><dd>PixInsight, Siril</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Prints & workshops -->
+    <section class="section rail" id="prints">
+      <h2>Prints &amp; workshops</h2>
+      <ul class="offers" data-reveal data-i="1" data-stagger="110">
+        <li>
+          <h3>Fine-art prints</h3>
+          <span class="price">from €240</span>
+          <p>Archival pigment on baryta paper, editions of 25, signed, with the full capture data on the back.</p>
+        </li>
+        <li>
+          <h3>Atacama dark-sky retreat</h3>
+          <span class="price">€1,850</span>
+          <p>Three nights, six people. Milky Way core, star trails and your first tracked deep-sky image.</p>
+        </li>
+        <li>
+          <h3>From raw frames to final image</h3>
+          <span class="price">€320</span>
+          <p>Six weeks online: stacking, calibration, gradient removal and narrowband colour, using my own data.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Contact -->
+    <section class="section rail" id="contact">
+      <h2>Contact</h2>
+      <div class="stack" style="--stack-gap: var(--space-5)">
+        <p class="lead">Commissions, licensing, prints or a seat on the next trip. I answer on cloudy nights, usually within a week.</p>
+        <ul class="channels" data-reveal data-i="1" data-stagger="90">
+          <li><a class="channel" href="mailto:hello@example.com">
+            <span class="channel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg></span>
+            <span class="channel-text"><span class="channel-label">Email</span><span class="channel-value">hello@example.com</span></span>
+            <svg class="channel-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a></li>
+          <li><a class="channel" href="#">
+            <span class="channel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></svg></span>
+            <span class="channel-text"><span class="channel-label">Instagram</span><span class="channel-value">@mirahalden.sky</span></span>
+            <svg class="channel-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a></li>
+          <li><a class="channel" href="#">
+            <span class="channel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 14 11-6 2 3.5-11 6z"/><path d="m15 8 2.5-1.4 2 3.5L17 11.5"/><path d="M10 15.5 8 21M10 15.5l3.5 5.5"/></svg></span>
+            <span class="channel-text"><span class="channel-label">AstroBin</span><span class="channel-value">astrobin.com/users/mirahalden</span></span>
+            <svg class="channel-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a></li>
+          <li><a class="channel" href="#">
+            <span class="channel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7.5" cy="12" r="3.5"/><circle cx="16.5" cy="12" r="3.5"/></svg></span>
+            <span class="channel-text"><span class="channel-label">Flickr</span><span class="channel-value">flickr.com/mirahalden</span></span>
+            <svg class="channel-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span class="meta">© 2026 Mira Halden</span>
+    <span class="meta">−24.6°, −70.4° · 2,635&nbsp;m</span>
+  </footer>
+</div>
+</body>
+</html>

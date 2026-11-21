@@ -1,0 +1,26 @@
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 16px); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body {
+  margin: 0; min-height: 100vh;
+  background: radial-gradient(1100px 600px at 85% -10%, rgba(242, 184, 128, .07), transparent 70%), var(--bg-1);
+  color: var(--text);
+  font: var(--text-m)/1.6 var(--font);
+  -webkit-font-smoothing: antialiased;
+  cursor: default;   /* arrow over text; links and buttons still show the hand */
+}
+h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; }
+h1 { font-size: var(--text-hero); font-weight: 300; letter-spacing: -0.04em; line-height: 1.05; }
+h2 { font-size: var(--text-l); font-weight: 600; letter-spacing: -0.01em; }
+h3 { font-size: var(--text-m); font-weight: 500; }
+p, li { text-wrap: pretty; }
+img, svg, video { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+[hidden] { display: none !important; }
+button, input, select, textarea { font: inherit; color: inherit; }
+a, button, label { touch-action: manipulation; }
+time, .num { font-variant-numeric: tabular-nums; }
+::selection { background: var(--accent); color: var(--on-accent); }
+a[href], button { cursor: pointer; }

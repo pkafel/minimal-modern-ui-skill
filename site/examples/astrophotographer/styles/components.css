@@ -1,0 +1,192 @@
+/* ---------- Skip link ---------- */
+.skip { position: absolute; left: 16px; top: -100px; z-index: 100; padding: 10px 16px; border-radius: var(--radius-m);
+  background: var(--text); color: var(--bg-1); text-decoration: none; }
+.skip:focus { top: 16px; }
+main:focus { outline: none; }
+
+/* ---------- Header ---------- */
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); padding-block: var(--space-3); }
+.brand { text-decoration: none; }
+.wordmark { font-family: var(--display); font-weight: 300; font-size: clamp(22px, 2.4vw, 26px); line-height: 1; letter-spacing: -0.04em; }
+.wordmark b { font-weight: 700; }
+.site-nav { display: flex; gap: var(--space-5); }
+.site-nav a { position: relative; color: var(--muted); text-decoration: none; padding: 12px 0; transition: color var(--dur-fast); }
+.site-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 6px; height: 2px; border-radius: 2px;
+  background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .3s ease; }
+.site-nav a:is(:hover, :focus-visible, [aria-current]) { color: var(--text); }
+.site-nav a:is(:hover, :focus-visible, [aria-current])::after { transform: scaleX(1); }
+@media (max-width: 420px) { .site-nav { gap: var(--space-3); } }
+
+/* ---------- Text helpers ---------- */
+.accent { color: var(--accent); }
+.lead { font-size: var(--text-read); line-height: 1.65; color: var(--muted); max-width: 46ch; }
+.meta { font: 400 13px/1.5 var(--mono); letter-spacing: .02em; color: var(--dim); }
+.prose { max-width: var(--measure); font-size: var(--text-read); line-height: 1.7; color: var(--muted); }
+.prose > * + * { margin-top: 1em; }
+.prose strong { color: var(--text); font-weight: 500; }
+.text-link { text-decoration: underline 1px; text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  text-underline-offset: .22em; transition: text-decoration-color var(--dur-fast), color var(--dur-fast); }
+.text-link:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+/* ---------- Buttons ---------- */
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 22px;
+  font-weight: 500; text-decoration: none; color: var(--on-accent); background: var(--accent);
+  border: 0; border-radius: var(--radius-pill); cursor: pointer;
+  transition: transform .25s, box-shadow .25s;
+}
+.btn:hover { transform: scale(1.03); box-shadow: 0 8px 24px -8px var(--glow); }
+.btn:active { transform: scale(.98); }
+.btn--outline { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1px var(--line); }
+.btn--outline:hover { box-shadow: inset 0 0 0 1px var(--text); }
+.btn .arrow { transition: transform .25s; }
+.btn:hover .arrow { transform: translateX(3px); }
+
+/* ---------- Framed image ---------- */
+.photo-frame { margin: 0; }
+.photo-frame .frame-img { border: 1px solid var(--line); border-radius: var(--radius-l); overflow: hidden; box-shadow: var(--elev-2); background: var(--bg-1); }
+.photo-frame svg { width: 100%; height: auto; }
+.photo-frame figcaption { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-3); }
+
+/* ---------- Work list (hairline rows, not cards) ---------- */
+.work-list { list-style: none; padding: 0; }
+.work-list li { display: grid; grid-template-columns: 1fr auto; gap: 2px var(--space-5); align-items: baseline; padding: 18px 0; }
+.work-list li + li { border-top: 1px solid var(--line); }
+.work-list .title { font-size: var(--text-l); font-weight: 400; letter-spacing: -0.01em; }
+.work-list .kind { color: var(--muted); font-size: var(--text-s); }
+.work-list .meta { grid-column: 1 / -1; }
+.work-list time { color: var(--dim); font-size: var(--text-s); }
+@media (max-width: 480px) { .work-list li { grid-template-columns: 1fr; } }
+
+/* ---------- Spec list (gear, capture data) ---------- */
+.spec { display: grid; grid-template-columns: 140px 1fr; }
+.spec dt, .spec dd { padding: 12px 0; border-top: 1px solid var(--line); }
+.spec dt { font: 400 13px/1.7 var(--mono); color: var(--dim); }
+.spec dd { color: var(--text); }
+@media (max-width: 480px) {
+  .spec { grid-template-columns: 1fr; }
+  .spec dd { border-top: 0; padding-top: 0; }
+}
+
+/* ---------- Offer rows (prints, workshops) ---------- */
+.offers { list-style: none; padding: 0; }
+.offers li { display: grid; grid-template-columns: 1fr auto; gap: 4px var(--space-5); padding: 20px 0; }
+.offers li + li { border-top: 1px solid var(--line); }
+.offers h3 { font-size: var(--text-l); font-weight: 400; letter-spacing: -0.01em; }
+.offers p { grid-column: 1; color: var(--muted); max-width: 54ch; }
+.offers .price { grid-row: 1; grid-column: 2; color: var(--accent); font-variant-numeric: tabular-nums; }
+
+/* ---------- Contact channels: quiet hairline rows like the work list; whole row is the link ---------- */
+.channels { list-style: none; padding: 0; }
+.channels li + li { border-top: 1px solid var(--line); }
+.channel { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: var(--space-3);
+  min-height: 56px; padding: var(--space-2) 0; text-decoration: none; }
+.channel-icon { display: grid; color: var(--dim); transition: color var(--dur-fast); }
+.channel svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.channel-text { display: contents; }
+.channel-label { color: var(--text); }
+.channel-value { color: var(--muted); font-size: var(--text-s); text-align: right; overflow-wrap: anywhere; transition: color var(--dur-fast); }
+.channel-arrow { color: var(--accent); opacity: 0; transform: translate(-4px, 4px); transition: opacity var(--dur-fast), transform .25s; }
+.channel:is(:hover, :focus-visible) .channel-icon,
+.channel:is(:hover, :focus-visible) .channel-value { color: var(--accent); }
+.channel:is(:hover, :focus-visible) .channel-arrow { opacity: 1; transform: none; }
+@media (max-width: 560px) {
+  .channel { grid-template-columns: auto 1fr; row-gap: 0; padding: var(--space-3) 0; }
+  .channel-value { grid-column: 2; text-align: left; }
+  .channel-arrow { display: none; }
+}
+
+/* ---------- Footer ---------- */
+.site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3);
+  padding-block: var(--space-5) max(var(--space-5), env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
+
+/* ---------- Motion ---------- */
+.site-main { transition: opacity 1s, transform 1s; }
+.js body.is-loading .site-main { opacity: 0; transform: translateY(6px); }
+
+.js [data-reveal]:not([data-stagger]), .js [data-stagger] > * {
+  opacity: 0; transform: var(--reveal-from, none);
+  transition-property: opacity, transform; transition-timing-function: ease;
+}
+.js [data-reveal].is-visible:not([data-stagger]), .js [data-stagger].is-visible > * { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .site-main { transition: none; }
+  .js [data-reveal], .js [data-stagger] > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .site-nav a::after, .btn, .btn .arrow, .channel-arrow { transition: none; }
+}
+
+/* ---------- Hero: full-viewport night sky (one ambient loop, pausable) ---------- */
+.sky {
+  position: absolute; inset: 0 0 auto 0; height: min(100svh, calc(var(--hero-max) + 72px)); overflow: hidden; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+          mask-image: linear-gradient(to bottom, #000 70%, transparent);
+}
+.sky-canvas { width: 100%; height: 100%; }
+.sky-planet {
+  position: absolute; right: -16vmin; top: 6vh; width: min(88vmin, 900px); height: auto; opacity: .92;
+  filter: drop-shadow(0 0 60px rgba(242, 184, 128, .08));
+}
+.hero {
+  /* Centered, and capped on tall screens so the copy never sinks to the bottom of a big monitor. */
+  position: relative; display: grid; align-content: center;
+  min-height: clamp(560px, calc(100svh - 72px), var(--hero-max)); padding-block: var(--space-7) var(--space-8);
+}
+.hero-title { font-family: var(--serif); font-size: var(--text-giant); font-weight: 300; letter-spacing: -0.025em; line-height: .98; max-width: 11ch; }
+.hero-title em { font-style: italic; color: var(--accent); }
+.hero .lead { color: color-mix(in srgb, var(--text) 78%, transparent); }
+.hero-stats { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-6); padding-top: var(--space-3); }
+.hero-stats div { border-left: 1px solid var(--line); padding-left: var(--space-3); }
+.hero-stats dt { font: 400 12px/1.5 var(--mono); letter-spacing: .04em; color: var(--dim); }
+.hero-stats dd { font-family: var(--serif); font-weight: 300; font-size: 26px; line-height: 1.2; }
+/* Starfield on/off switch at the end of the nav: same type as the nav links, track fills with the accent when on. */
+.site-nav { align-items: center; }
+.sky-toggle {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0;
+  background: none; border: 0; color: var(--muted); cursor: pointer; transition: color var(--dur-fast);
+}
+.sky-toggle[hidden] { display: none; }
+.sky-toggle:hover { color: var(--text); }
+.switch { position: relative; width: 36px; height: 20px; border-radius: var(--radius-pill);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text) 35%, transparent);
+  transition: background-color .25s, box-shadow .25s; }
+.switch-thumb { position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--muted); transition: transform .25s var(--ease-out), background-color .25s; }
+.sky-toggle[aria-checked="true"] .switch { background: var(--accent); box-shadow: none; }
+.sky-toggle[aria-checked="true"] .switch-thumb { transform: translateX(16px); background: var(--on-accent); }
+@media (max-width: 480px) {   /* keep the switch, hide the word visually; it stays the accessible name */
+  .sky-toggle-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+@media (prefers-reduced-motion: reduce) { .switch, .switch-thumb { transition: none; } }
+@media (max-width: 860px) {
+  .sky-planet { right: -30vmin; top: 4vh; opacity: .55; }
+  .hero { padding-block: var(--space-7); }
+}
+
+/* ---------- Accents below the hero ---------- */
+/* Section headings: a small amber star, and the heading stays in view while its section scrolls past. */
+.rail > h2 { display: flex; align-items: baseline; gap: 10px; }
+.rail > h2::before { content: "✦"; content: "✦" / ""; color: var(--accent); font-size: .75em; }
+@media (min-width: 861px) { .rail > h2 { position: sticky; top: var(--space-6); align-self: start; } }
+
+/* Pull line in About: echoes the hero's serif and its one italic accent word. */
+.prose .pull { font-family: var(--serif); font-weight: 300; font-size: clamp(24px, 2.6vw, 30px); line-height: 1.3;
+  letter-spacing: -0.015em; color: var(--text); }
+.prose .pull em { color: var(--accent); }
+
+/* List rows: on hover the title warms up, an amber hairline draws in, and the other rows dim. */
+:is(.work-list, .offers, .channels) li { position: relative; transition: opacity .3s ease; }
+:is(.work-list, .offers, .channels) li::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px;
+  background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease-out); }
+:is(.work-list .title, .offers h3, .channel-label) { transition: color var(--dur-fast); }
+@media (hover: hover) {
+  :is(.work-list, .offers, .channels):hover li:not(:hover) { opacity: .45; }
+  :is(.work-list, .offers, .channels) li:hover::after { transform: scaleX(1); }
+  .work-list li:hover .title, .offers li:hover h3 { color: var(--accent); }
+}
+/* Contact rows are links, so keyboard focus gets the same treatment as hover. */
+.channels:focus-within li:not(:focus-within) { opacity: .45; }
+.channels li:is(:hover, :focus-within)::after { transform: scaleX(1); }
+.channels li:is(:hover, :focus-within) .channel-label { color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { :is(.work-list, .offers, .channels) li, :is(.work-list, .offers, .channels) li::after { transition: none; } }
