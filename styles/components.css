@@ -11,14 +11,12 @@
 @media (max-width: 480px) { .wordmark { font-size: 19px; } .site-nav { gap: var(--space-5); } }
 
 /* ---------- Hero ---------- */
-.hero { padding-block: var(--space-8) var(--space-7); max-width: 900px; }
-.eyebrow { display: inline-flex; align-items: center; gap: var(--space-2); font: 500 var(--text-xs)/1 var(--mono);
-  color: var(--muted); padding: 8px 12px; border-radius: var(--radius-pill); border: 1px solid var(--line-strong);
-  background: color-mix(in srgb, var(--surface) 70%, transparent); }
-.eyebrow .caret { color: var(--accent-a); }
-.hero h1 { margin-top: var(--space-5); font-size: var(--text-hero); font-weight: 500; letter-spacing: -0.045em; line-height: 1.02; }
+/* The headline is sized to the hero's width (≈11.7em of text), so it spans the page on one line;
+   on narrow screens it keeps a readable minimum and wraps. */
+.hero { container-type: inline-size; padding-block: var(--space-6) var(--space-7); text-align: center; }
+.hero h1 { font-size: var(--text-hero-fit); font-weight: 500; letter-spacing: -0.045em; line-height: 1.02; }
 .hero h1 em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; color: var(--accent-a); }
-.hero .lead { margin-top: var(--space-5); font-size: var(--text-read); line-height: 1.65; color: var(--muted); max-width: 52ch; }
+.hero .lead { margin-top: var(--space-5); font-size: var(--text-read); line-height: 1.65; color: var(--muted); max-width: 52ch; margin-inline: auto; }
 .hero .lead code { font: .88em var(--mono); color: var(--text); white-space: nowrap; }
 
 /* ---------- Gallery ---------- */
@@ -61,7 +59,7 @@
 }
 
 /* ---------- Footer ---------- */
-.site-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-5);
+.site-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-2) var(--space-5);
   padding: var(--space-6) 0 max(var(--space-6), env(safe-area-inset-bottom)); border-top: 1px solid var(--line);
   font-size: var(--text-s); color: var(--dim); }
 .site-footer a { color: var(--text); text-decoration: none; padding: 10px 0; }

@@ -15,7 +15,7 @@
   --serif: "Instrument Serif", Georgia, serif;
   --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --text-xs: 13px; --text-s: 14px; --text-m: 16px; --text-read: clamp(17px, 1rem + .2vw, 19px); --text-l: 21px;
-  --text-hero: clamp(44px, 7vw, 88px);
+  --text-hero-fit: max(44px, 8.3cqi);
   --measure: 60ch;
   /* space, shape, motion */
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 40px; --space-7: 64px; --space-8: 112px;
