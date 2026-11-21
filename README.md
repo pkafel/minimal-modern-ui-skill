@@ -58,13 +58,13 @@ claude plugin update minimal-modern-ui@minimal-modern-ui-skill
 Clone the repo straight into your skills folder. For all your projects:
 
 ```sh
-git clone https://github.com/pkafel/minimal-modern-ui-skill ~/.claude/skills/minimal-modern-ui
+git clone --single-branch https://github.com/pkafel/minimal-modern-ui-skill ~/.claude/skills/minimal-modern-ui
 ```
 
 For one project only (run from the project root):
 
 ```sh
-git clone https://github.com/pkafel/minimal-modern-ui-skill .claude/skills/minimal-modern-ui
+git clone --single-branch https://github.com/pkafel/minimal-modern-ui-skill .claude/skills/minimal-modern-ui
 ```
 
 The folder must be named `minimal-modern-ui`. Start a new session afterwards. To update, run `git pull` inside
@@ -75,7 +75,7 @@ the folder.
 Skills are uploaded as a ZIP whose root is the skill folder. Build one with only the skill files:
 
 ```sh
-git clone https://github.com/pkafel/minimal-modern-ui-skill
+git clone --single-branch https://github.com/pkafel/minimal-modern-ui-skill
 cd minimal-modern-ui-skill
 git archive --prefix=minimal-modern-ui/ -o minimal-modern-ui.zip HEAD SKILL.md references LICENSE THIRD_PARTY_NOTICES.md
 ```
@@ -90,7 +90,7 @@ Ask for what you want and Claude loads the skill when it fits:
 
 > Restyle this landing page so it looks clean and modern.
 
-Or invoke it directly: type `/` in Claude Code and pick **minimal-modern-ui** from the list.
+Or invoke it directly with `/minimal-modern-ui`.
 
 ## Examples
 
@@ -99,13 +99,13 @@ Each example was built from a single prompt, then refined in a short conversatio
 
 ### Astrophotographer portfolio
 
-[![First screen of a dark astrophotography portfolio with a starfield, a large serif headline and a ringed planet cropped at the right edge](site/assets/astrophotographer.webp)](https://pkafel.github.io/minimal-modern-ui-skill/examples/astrophotographer/)
+[![First screen of a dark astrophotography portfolio with a starfield, a large serif headline and a ringed planet cropped at the right edge](https://pkafel.github.io/minimal-modern-ui-skill/assets/astrophotographer.webp)](https://pkafel.github.io/minimal-modern-ui-skill/examples/astrophotographer/)
 
 > Design a web page for a photographer who is into space, planets and stars photography. Use /minimal-modern-ui skill.
 
 ### Database community landing page
 
-[![First screen of a dark landing page for a database community: the headline "For engineers who read the query plan", an email signup and a terminal panel with an EXPLAIN ANALYZE query plan](site/assets/database-community.webp)](https://pkafel.github.io/minimal-modern-ui-skill/examples/database-community/)
+[![First screen of a dark landing page for a database community: the headline "For engineers who read the query plan", an email signup and a terminal panel with an EXPLAIN ANALYZE query plan](https://pkafel.github.io/minimal-modern-ui-skill/assets/database-community.webp)](https://pkafel.github.io/minimal-modern-ui-skill/examples/database-community/)
 
 > Use /minimal-modern-ui to create a landing page for a community of software engineers interested in databases.
 
@@ -121,11 +121,10 @@ Names, dates and links in the examples are made up.
 | `references/interface-checklist.md` | Detailed interaction, form, content, motion and performance checks |
 | `references/templates.md` | Measurements from ten landing-page templates, to calibrate the eye |
 | `.claude-plugin/` | Plugin and marketplace manifests for `/plugin install` |
-| `site/` | The [example gallery](https://pkafel.github.io/minimal-modern-ui-skill/), published to GitHub Pages; not part of the skill |
 
 ## Contributing
 
 Issues and pull requests are welcome, especially defaults learned from real sites built with the skill. Keep
-additions framework-agnostic and within scope (personal sites, landing pages, blogs). To add an example, put
-the site in `site/examples/<name>/` with relative paths only, add a screenshot to `site/assets/` and a card to
-`site/index.html`.
+additions framework-agnostic and within scope (personal sites, landing pages, blogs). The example gallery lives
+on the [`gh-pages`](https://github.com/pkafel/minimal-modern-ui-skill/tree/gh-pages) branch, so installs only
+download the skill. To add an example, open a pull request against that branch.
