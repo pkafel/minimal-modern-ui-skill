@@ -100,7 +100,6 @@ To use the skill you can directly invoke it in your prompt where you describe wh
 | `references/snippets.md` | Copy-paste building blocks: tokens (light and dark), base layer, skip link, header, prose, post list, buttons and fields, signup form, page-load fade, scroll reveals, FAQ disclosure, and more |
 | `references/defaults.md` | Concrete default values (spacing, header and heading sizes, contact rows, testimonials) and fixes for common CSS and motion pitfalls |
 | `references/interface-checklist.md` | Detailed interaction, form, content, motion and performance checks |
-| `references/templates.md` | Measurements from ten landing-page templates, to calibrate the eye |
 | `.claude-plugin/` | Plugin and marketplace manifests for `/plugin install` |
 | `.github/workflows/skill-zip.yml` | Rebuilds the claude.ai ZIP on the `latest` release when the skill changes |
 

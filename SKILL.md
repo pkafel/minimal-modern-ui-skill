@@ -21,8 +21,6 @@ Supporting files (read when needed):
   and performance checks, adapted from Vercel's Web Interface Guidelines.
 - [references/defaults.md](references/defaults.md): concrete default values (spacing, header sizes, section
   headings, contact rows) and fixes for common CSS and motion pitfalls.
-- [references/templates.md](references/templates.md): measurements from ten landing-page templates. Reference
-  data to calibrate your eye, not rules.
 
 ## 1. Workflow
 
