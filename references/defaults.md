@@ -23,13 +23,19 @@ otherwise; items marked "ask the user" are taste calls to confirm before going f
 
 - **Section padding around dividers: 56px desktop / 40px mobile.** Why: 80px on each side puts about 160px
   around every hairline, which reads as too loose.
-- **Space under the last section: about 40px**, on top of the footer's own padding (about 32px). Why: 72px
-  plus the footer's padding reads as slightly too much.
+- **Space under the last section: about 40px**, then a footer with about 24–32px of its own padding. Why: 72px
+  or more plus the footer's padding reads as too much, especially under a grid of cards.
 - **Start the page with padding, not margin.** Put `padding-top` on the wrapper. Why: a top margin on the first
   block collapses through `<body>` and, with `min-height: 100vh`, adds an unwanted scroll.
 - **Center full-height hero copy and cap the hero's height:** `min-height: clamp(560px, 100svh - header, 920px)`,
   with any background layer capped the same. Why: copy anchored to the bottom (`align-content: end`) looks right
   on a laptop but sits under a tall empty band on a large or half-width monitor.
+- **Hero without imagery: about 40px under the header, centered, headline filling the width.** Size the headline
+  to its container so it spans the page on one line: put `container-type: inline-size` on the hero, measure the
+  headline's width in em once (text width ÷ font size, e.g. 11.7), and set
+  `font-size: max(44px, calc(100cqi / 11.7))`, so it wraps on phones. Why: a left-aligned two-line headline
+  under 100px+ of padding leaves an empty band and reads unfinished when there is no image beside it.
+- **No pill or eyebrow badge above the headline.** Why: a bordered label there reads as a button.
 - **Don't reserve height for an empty form message.** Give the empty message row no height or margin but keep
   it rendered so screen readers still announce it, or place it below the fine print. Why: a min-height row plus
   its margin and the flex gap opens about 45px and makes the next line look detached.
@@ -38,6 +44,14 @@ otherwise; items marked "ask the user" are taste calls to confirm before going f
 
 - **Give the header a nav, not a lone button.** Use a few section links with a sliding underline. Why: a single
   button opposite the brand looks unfinished.
+- **One icon link is a good header for a one-section page.** A 44px ring with the GitHub (or profile) mark and an
+  `aria-label`; on hover the mark and ring take the accent with a soft glow. Drop anchor links to the content
+  right below the hero. Why: "Examples" pointing a few pixels down makes no sense, and the ringed icon reads as a
+  deliberate accent rather than a lonely button.
+- **Scroll-synced nav highlight suits a short anchor nav.** Show the accent underline on the link of the section
+  in view (`aria-current="location"`, current once its top passes ~40% of the viewport, last section at the page
+  bottom). Why: with three or so full-color links it orients without noise; on long navs or under an
+  immersive hero it can feel like too much, so ask first there.
 - **Size the header against the hero headline, not only the section headings.** Next to a 64px hero headline,
   start at about a 27px wordmark, 16px nav links with a 40px gap and a 76px bar. Why: a 22px wordmark, 14px
   links and a 64px bar look undersized under a big hero, even when the wordmark is 1.2–1.6× the section
@@ -64,6 +78,9 @@ otherwise; items marked "ask the user" are taste calls to confirm before going f
 
 - **Set `a { color: inherit }` globally and give links a hover state.** Why: unstyled links fall back to the
   browser's dark blue, which is unreadable on dark surfaces.
+- **Re-derive the accent when the scheme changes.** An accent picked on dark rarely passes on light (a peach at
+  about 2:1 on white needed a burnt orange at 4.9:1), and the reverse. Compute contrast from the token values
+  for both. Why: the accent marks links and key words, so it must read as text.
 - **Highlight by dimming, not decorating.** Show the item that matters at full brightness and dim the rest,
   instead of badges or tinted boxes. Why: decoration adds noise; contrast alone marks the choice quietly.
 
@@ -101,5 +118,7 @@ otherwise; items marked "ask the user" are taste calls to confirm before going f
   the channel name, the value muted on the right, accent color and an arrow only on hover or focus, the whole
   row as the link. Why: a display-size email address (≈40px light) is out of proportion, and a grid of rows
   with ringed icons, labels and always-on arrows is too busy.
+- **Footer: a credit and the essential links, no disclaimers.** "Made by Name" linking to the author's profile
+  is a good default. Why: lines like "names here are made up" add noise at the end of the page.
 - **Re-read the copy after changing behavior.** Check every sentence that explains a form or page after it
   changes what it does. Why: a line can quietly become wrong.

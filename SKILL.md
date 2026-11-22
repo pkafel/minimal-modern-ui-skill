@@ -1,6 +1,6 @@
 ---
 name: minimal-modern-ui
-description: Build or restyle minimal, clean, modern websites for people and small launches - personal sites, portfolios, landing pages and blogs - in plain HTML/CSS/JS that works with any stack. Covers choosing a quiet direction, design tokens and shared components so every page matches, page recipes (landing, personal, blog index, blog post), reading typography, restrained motion, accessible forms and disclosures, the accessibility and performance baseline, and verifying in a real browser. Use when asked for a "modern", "clean", "minimal", "polished" personal site, landing page or blog. Not for web apps, product UIs, dashboards or internal tools.
+description: Build or restyle minimal, clean, modern websites for people and small launches - personal sites, portfolios, landing pages and blogs - in plain HTML/CSS/JS that works with any stack. Covers choosing a quiet direction, design tokens and shared components so every page matches, page recipes (landing, personal, gallery, blog index, blog post), reading typography, restrained motion, accessible forms and disclosures, the accessibility and performance baseline, and verifying the result (in a browser when one is available, otherwise headless). Use when asked for a "modern", "clean", "minimal", "polished" personal site, landing page or blog. Not for web apps, product UIs, dashboards or internal tools.
 ---
 
 # Minimal modern UI: minimal sites that feel finished
@@ -35,7 +35,7 @@ Supporting files (read when needed):
    and one source for the header, footer and `<head>`. Every page, including the first, is built from these.
 4. **Real copy first.** Placeholder text hides layout problems. Follow the page recipe (§4).
 5. **Build static, responsive and accessible**, then add motion, then polish.
-6. **Verify in a browser** (§11), then do the **restraint pass** (§12).
+6. **Verify the result** (§11), then do the **restraint pass** (§12).
 7. **Iterate in small, visible steps.** One change at a time, look at it, ask for taste calls instead of
    guessing, say plainly what was and wasn't verified, and only commit or publish when asked.
 
@@ -104,6 +104,17 @@ copied over.
 - Contact is a plain link (email, profiles), not a form, unless the user asks for one. Several channels read
   best as the same hairline rows as the rest of the page, not as oversized text or icon cards (see defaults).
 
+**Gallery / showcase** (examples, case studies, work samples)
+- A short centered hero (headline plus one sentence), then the work. No install, pricing or "how it works"
+  blocks; link out to docs instead.
+- Two per row on desktop, one on phones. Each item: the screenshot in a small browser frame (dots plus the
+  address), a small type label, the title with an arrow, and one caption (a prompt, a client, a one-line
+  summary) in a quiet box.
+- The whole card is the link: stretch the title link over the card (`::after { inset: 0 }`) so the screenshot
+  is clickable too, with one tab stop. Hover: the frame lifts a few pixels and the screenshot zooms slightly.
+- A plain single column of full-width screenshots on a system font reads bland and oversized; give the page
+  one display accent (an italic serif word in the headline, a soft background glow).
+
 **Blog index**
 - A list, not cards: title, date (`<time datetime>`), optionally a one-line summary. Group by year once there
   are many posts. The whole row is the link, with no dead zones.
@@ -119,7 +130,9 @@ copied over.
 **Shared across types**
 - **Page essentials** in the shared `<head>`: every page has `<html lang>`, a unique `<title>` and meta
   description, a favicon, `theme-color`, and Open Graph title and description.
-- **Header: a nav or nothing.** A single lonely button opposite the brand looks unfinished.
+- **Header: a nav, one icon link, or nothing.** A single lonely text button opposite the brand looks
+  unfinished, but one icon link in a ring (a GitHub or profile mark) works. On a one-section page, drop anchor
+  links to the content right below; they point nowhere useful.
 - **Footer at the bottom**, also on short pages (full-height flex column), with no stray margin under it.
 - **Design every state**: empty (no posts yet), very long titles, missing images, a 404 page in the site's look.
 
@@ -213,7 +226,7 @@ Motion should help someone see what changed or where to look. On these sites, le
   `height` so nothing shifts.
 - **Performance**: preload the main font and keep weights and character sets to what's used, preconnect to font
   hosts, `display=swap`, lazy-load images below the fold, one IntersectionObserver, no large blocking scripts.
-- **Honest content**: no fake numbers or quotes; label samples as samples.
+- **Honest content**: no fake numbers or quotes.
 
 ## 10. Adapting to an existing project
 
@@ -221,22 +234,36 @@ If the site already has a build or templating setup, put the tokens in its globa
 footer and head in its shared layout or includes, and keep the components' markup and class names. If it has
 none, plain files are fine: the layer structure in snippets works without any tooling.
 
-## 11. Verify in a real browser
+## 11. Verify the result
 
-Use whatever browser tool the session has, and prove claims with numbers rather than impressions:
-- **Screenshots after scrolling**, plus `getBoundingClientRect()` for gaps and alignment, `getComputedStyle()`
-  for end-state colors and fonts, and `document.fonts.check()` that web fonts loaded.
+Check the page in a real rendering engine, with whatever the session offers, in this order of preference:
+1. **A browser tool** (an in-app browser or browser extension): best for interaction, hover and scrolling.
+2. **A headless browser** when there is no browser tool, or it can't do what's needed: Playwright
+   (`npx playwright install chromium`, then `npx playwright screenshot --viewport-size "375,800" URL out.png`) or
+   headless Chrome. Screenshot several widths and read the images.
+3. **Neither available?** Check what the code can prove (paths resolve, tokens are used, contrast computed from
+   the token values), then give the user a short, specific list of things to look at, and say plainly what
+   wasn't verified.
+
+Whichever route, prove claims with numbers rather than impressions:
+- **Measure**: `getBoundingClientRect()` for gaps and alignment, `getComputedStyle()` for end-state colors and
+  fonts, `document.fonts.check()` that web fonts loaded, `scrollWidth` vs `clientWidth` for horizontal scroll.
 - **The ends of the range**: narrow, short, very tall (half of a large monitor: the footer stays at the bottom
   and full-height heroes keep their copy in place) and very wide (zoom out to 50%); also keyboard tab order,
   reduced motion, dark mode, JS disabled, and Safari if available. On macOS, "Always show" scroll bars reveal
   overflow bugs.
+- **Wait for the end state.** Pages fade in on load; screenshot only after the fade, or a correct page looks
+  broken. Headless "virtual time" budgets may not finish CSS transitions: wait real time before capturing.
+- **Stale files**: a local static server lets the browser reuse cached CSS and JS. Refetch them with
+  `fetch(url, { cache: "reload" })` before reloading, or add a throwaway query (`?r=2`). A hash-only navigation
+  doesn't reload either (`?r=2#section`).
+- **Narrow widths**: a browser window may refuse to shrink to phone width. Load the page in a 375px `<iframe>`
+  (or set the headless viewport) and check its `scrollWidth`.
 - **Tool quirks**: background tabs throttle timers, animations and IntersectionObserver, so take a screenshot to
-  force a render, wait, and take another. A hash-only navigation doesn't reload; add a throwaway query
-  (`?r=2#section`). Some tools take click coordinates in the screenshot's scaled frame (ratio = frame width ÷
-  `innerWidth`). Test hover logic by dispatching `pointerover`/`pointerout`, then confirm with a real hover.
-- **No browser tool?** Playwright can screenshot several widths (`npx playwright install chromium`, then
-  `npx playwright screenshot --viewport-size "375,800" URL out.png`); otherwise give the user a short, specific
-  list of things to check instead of claiming it works.
+  force a render, wait, and take another. Some tools take click coordinates in the screenshot's scaled frame
+  (ratio = frame width ÷ `innerWidth`); for hover and clicks prefer an element reference, or read the element's
+  rect and target its center. Test hover logic by dispatching `pointerover`/`pointerout`, then confirm with a
+  real hover.
 - Close tabs you opened, and stop dev servers you started when the user asks.
 
 ## 12. Restraint pass

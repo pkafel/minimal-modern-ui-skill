@@ -491,7 +491,7 @@ const go = d => { s[i].classList.remove('on'); i = (i + d + s.length) % s.length
 document.getElementById('prev').onclick = () => go(-1);
 document.getElementById('next').onclick = () => go(1);
 ```
-With two or fewer slides, skip the carousel and show them all. Label sample quotes as samples.
+With two or fewer slides, skip the carousel and show them all.
 
 ## Wordmark with weight contrast
 

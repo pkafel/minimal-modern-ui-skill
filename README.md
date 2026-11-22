@@ -5,7 +5,7 @@ sites, portfolios, landing pages and blogs** in plain HTML, CSS and a little van
 
 It gives Claude a design compass rather than a template: how to pick a quiet direction, set up design tokens
 and shared components so every page matches, lay out each page type, set readable type, add restrained
-motion, meet an accessibility and performance baseline, and check the result in a real browser.
+motion, meet an accessibility and performance baseline, and verify the result (in a browser when one is available, otherwise headless).
 
 **[See example sites built with it →](https://pkafel.github.io/minimal-modern-ui-skill/)**
 
@@ -115,7 +115,7 @@ Names, dates and links in the examples are made up.
 
 | File | Contents |
 |---|---|
-| `SKILL.md` | Workflow, direction, shared styles and components, page recipes (landing, personal, blog index, blog post) with page essentials, typography, color, motion, interaction patterns, the firm quality baseline, browser verification |
+| `SKILL.md` | Workflow, direction, shared styles and components, page recipes (landing, personal, gallery, blog index, blog post) with page essentials, typography, color, motion, interaction patterns, the firm quality baseline, verification (browser tool, headless browser or a checklist) |
 | `references/snippets.md` | Copy-paste building blocks: tokens (light and dark), base layer, skip link, header, prose, post list, buttons and fields, signup form, page-load fade, scroll reveals, FAQ disclosure, and more |
 | `references/defaults.md` | Concrete default values (spacing, header and heading sizes, contact rows, testimonials) and fixes for common CSS and motion pitfalls |
 | `references/interface-checklist.md` | Detailed interaction, form, content, motion and performance checks |
