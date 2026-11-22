@@ -92,25 +92,6 @@ Ask for what you want and Claude loads the skill when it fits:
 
 Or invoke it directly with `/minimal-modern-ui`.
 
-## Examples
-
-Each example was built from a single prompt, then refined in a short conversation. Browse them live in the
-**[gallery](https://pkafel.github.io/minimal-modern-ui-skill/)**.
-
-### Astrophotographer portfolio
-
-[![First screen of a dark astrophotography portfolio with a starfield, a large serif headline and a ringed planet cropped at the right edge](https://pkafel.github.io/minimal-modern-ui-skill/assets/astrophotographer.webp)](https://pkafel.github.io/minimal-modern-ui-skill/examples/astrophotographer/)
-
-> Design a web page for a photographer who is into space, planets and stars photography. Use /minimal-modern-ui skill.
-
-### Database community landing page
-
-[![First screen of a dark landing page for a database community: the headline "For engineers who read the query plan", an email signup and a terminal panel with an EXPLAIN ANALYZE query plan](https://pkafel.github.io/minimal-modern-ui-skill/assets/database-community.webp)](https://pkafel.github.io/minimal-modern-ui-skill/examples/database-community/)
-
-> Use /minimal-modern-ui to create a landing page for a community of software engineers interested in databases.
-
-Names, dates and links in the examples are made up.
-
 ## What's inside
 
 | File | Contents |
