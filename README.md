@@ -7,7 +7,9 @@ It gives Claude a design compass rather than a template: how to pick a quiet dir
 and shared components so every page matches, lay out each page type, set readable type, add restrained
 motion, meet an accessibility and performance baseline, and verify the result (in a browser when one is available, otherwise headless).
 
-**[See example sites built with it →](https://pkafel.github.io/minimal-modern-ui-skill/)**
+[See example sites built with it →](https://pkafel.github.io/minimal-modern-ui-skill/)
+
+**Keep in mind that a page Claude builds with this skill isn't production-ready. Expect to replace sample content, add what publishing needs (SEO, analytics, hosting) and tune the design to your taste. It is, however, a solid base to build on.**
 
 ## Contents
 
