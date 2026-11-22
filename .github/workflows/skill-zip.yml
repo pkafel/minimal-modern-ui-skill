@@ -1,0 +1,49 @@
+name: Publish skill ZIP
+
+# Rebuilds minimal-modern-ui.zip (the upload format for claude.ai and the Claude desktop app) whenever the
+# skill changes, and attaches it to the "latest" release so the README download link always serves the
+# current version.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "SKILL.md"
+      - "references/**"
+      - "LICENSE"
+      - "THIRD_PARTY_NOTICES.md"
+      - ".github/workflows/skill-zip.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: skill-zip
+  cancel-in-progress: true
+
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build the ZIP (skill folder at its root)
+        run: |
+          git archive --prefix=minimal-modern-ui/ -o minimal-modern-ui.zip HEAD \
+            SKILL.md references LICENSE THIRD_PARTY_NOTICES.md
+          unzip -l minimal-modern-ui.zip
+
+      - name: Publish to the "latest" release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git tag -f latest "$GITHUB_SHA"
+          git push -f origin refs/tags/latest
+          notes="Skill ZIP for claude.ai and the Claude desktop app, built from ${GITHUB_SHA::7}. Claude Code users: see the README for /plugin install."
+          if gh release view latest >/dev/null 2>&1; then
+            gh release edit latest --notes "$notes" --latest
+            gh release upload latest minimal-modern-ui.zip --clobber
+          else
+            gh release create latest minimal-modern-ui.zip --title "minimal-modern-ui skill (latest)" --notes "$notes" --latest
+          fi

@@ -72,15 +72,17 @@ the folder.
 
 ### Claude.ai and the Claude desktop app
 
-Skills are uploaded as a ZIP whose root is the skill folder. Build one with only the skill files:
+Download **[minimal-modern-ui.zip](https://github.com/pkafel/minimal-modern-ui-skill/releases/latest/download/minimal-modern-ui.zip)**
+and upload it in the **Skills** section of Claude's settings, then turn it on. The ZIP is rebuilt automatically
+whenever the skill changes; to update, download it again and re-upload.
+
+To build it yourself from a clone instead:
 
 ```sh
 git clone --single-branch https://github.com/pkafel/minimal-modern-ui-skill
 cd minimal-modern-ui-skill
 git archive --prefix=minimal-modern-ui/ -o minimal-modern-ui.zip HEAD SKILL.md references LICENSE THIRD_PARTY_NOTICES.md
 ```
-
-Then upload `minimal-modern-ui.zip` in the **Skills** section of Claude's settings and turn it on.
 
 ## Use
 
@@ -100,6 +102,7 @@ To use the skill you can directly invoke it in your prompt where you describe wh
 | `references/interface-checklist.md` | Detailed interaction, form, content, motion and performance checks |
 | `references/templates.md` | Measurements from ten landing-page templates, to calibrate the eye |
 | `.claude-plugin/` | Plugin and marketplace manifests for `/plugin install` |
+| `.github/workflows/skill-zip.yml` | Rebuilds the claude.ai ZIP on the `latest` release when the skill changes |
 
 ## Contributing
 
