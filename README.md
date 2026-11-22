@@ -84,13 +84,11 @@ Then upload `minimal-modern-ui.zip` in the **Skills** section of Claude's settin
 
 ## Use
 
-Ask for what you want and Claude loads the skill when it fits:
+To use the skill you can directly invoke it in your prompt where you describe what kind of page you try to create. It can be as simple as:
 
-> Build me a minimal personal site with a blog, dark and light mode.
+> Build me a personal site with a blog, dark and light mode with /minimal-modern-ui skill
 
-> Restyle this landing page so it looks clean and modern.
-
-Or invoke it directly with `/minimal-modern-ui`.
+> Restyle this landing page with /minimal-modern-ui skill so it looks clean and modern.
 
 ## What's inside
 
